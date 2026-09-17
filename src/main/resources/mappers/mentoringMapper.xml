@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.MentoringMapper">
+
+	<!-- 멘토링 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="mentoringNum" resultType="int" order="BEFORE">
+			SELECT SEQ_MENTORING.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_MENTORING (MENTORING_NUM, TITLE, CONTENT, REG_DATE, VIEW_COUNT, TEAM_NUM, WEEKLY_NUM, USER_ID)
+		VALUES (#{mentoringNum}, #{title}, #{content}, SYSDATE, 0, #{teamNum}, #{weeklyNum}, #{userId})
+	</insert>
+
+
+	<!-- 멘토링 조회 -->
+	<select id="read" resultType="com.mis.domain.MentoringVO">
+		SELECT M.MENTORING_NUM, M.TITLE, M.CONTENT, M.REG_DATE, M.VIEW_COUNT, T.TEAM_NUM, T.INTRO, W.WEEKLY_NUM, W.WEEK_NAME, U.USER_ID
+		FROM TBL_MENTORING M JOIN TBL_TEAM T ON M.TEAM_NUM = T.TEAM_NUM JOIN TBL_WEEKLY W ON M.WEEKLY_NUM = W.WEEKLY_NUM JOIN TBL_USER U ON M.USER_ID = U.USER_ID
+		WHERE M.MENTORING_NUM = #{value}
+	</select>
+
+
+	<!-- 멘토링 수정 -->
+	<update id="update">
+		UPDATE TBL_MENTORING
+		SET TITLE = #{title}, CONTENT = #{content}
+		WHERE MENTORING_NUM = #{mentoringNum}
+	</update>
+
+
+	<!-- 멘토링 삭제 -->
+	<delete id="delete">
+		DELETE FROM TBL_MENTORING
+		WHERE MENTORING_NUM = #{value}
+	</delete>
+
+
+	<!-- 조회수 증가 -->
+	<update id="viewCount">
+		UPDATE TBL_MENTORING
+		SET VIEW_COUNT = VIEW_COUNT + 1
+		WHERE MENTORING_NUM = #{value}
+	</update>
+
+
+	<!-- 첨부파일 등록 -->
+	<insert id="insertFile">
+		<selectKey keyProperty="fileNum" resultType="int" order="BEFORE">
+			SELECT SEQ_MENTORING_FILE.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_MENTORING_FILE (FILE_NUM, FILE_NAME, MENTORING_NUM)
+		VALUES (#{fileNum}, #{fileName}, #{mentoringNum})
+	</insert>
+
+
+	<!-- 게시글의 첨부파일 전체 삭제 -->
+	<delete id="deleteFile">
+		DELETE FROM TBL_MENTORING_FILE
+		WHERE MENTORING_NUM = #{value}
+	</delete>
+
+
+	<!-- 첨부파일 개별 삭제 -->
+	<delete id="onlyFileDelete">
+		DELETE FROM TBL_MENTORING_FILE
+		WHERE FILE_NUM = #{value}
+	</delete>
+
+
+	<!-- 첨부파일 목록 -->
+	<select id="fileList" resultType="com.mis.domain.MentoringFileVO">
+		SELECT FILE_NUM, SUBSTR(FILE_NAME, INSTR(FILE_NAME, '_') + 1) AS FILE_NAME, FILE_NAME AS FILES, MENTORING_NUM
+		FROM TBL_MENTORING_FILE
+		WHERE MENTORING_NUM = #{value}
+	</select>
+
+
+	<!-- 최신 연도/학기 -->
+	<select id="selectLatestYearTerm" resultType="com.mis.dto.YearTermDTO">
+		SELECT YEAR, TERM
+		FROM (
+		SELECT YEAR, TERM
+		FROM TBL_TEAM
+		ORDER BY TO_NUMBER(YEAR) DESC, TO_NUMBER(TERM) DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+
+	<!-- 연도/학기 목록 -->
+	<select id="selectYearTermList" resultType="com.mis.dto.YearTermDTO">
+		SELECT DISTINCT YEAR, TERM
+		FROM TBL_TEAM
+		ORDER BY TO_NUMBER(YEAR) DESC, TO_NUMBER(TERM) DESC
+	</select>
+
+
+	<!-- 관리자: 선택한 연도/학기의 전체 팀 -->
+	<select id="selectTeamsByYearTerm" parameterType="map" resultType="com.mis.domain.TeamVO">
+		SELECT TEAM_NUM, TEAM_NAME, YEAR, TERM, USER_ID, INTRO, REG_DATE
+		FROM TBL_TEAM
+		WHERE YEAR = #{year} AND TERM = #{term}
+		ORDER BY TEAM_NUM DESC
+	</select>
+
+
+	<!-- 멘토/멘티: 선택한 연도/학기의 소속 팀 -->
+	<select id="selectMyTeamsByYearTerm" parameterType="map" resultType="com.mis.domain.TeamVO">
+		SELECT T.TEAM_NUM, T.TEAM_NAME, T.YEAR, T.TERM, T.USER_ID, T.INTRO, T.REG_DATE
+		FROM TBL_TEAM T
+		WHERE T.YEAR = #{year}
+		AND T.TERM = #{term}
+		AND (
+		T.USER_ID = #{userId}
+		OR EXISTS (
+		SELECT 1
+		FROM TBL_TEAM_MEMBER TM
+		WHERE TM.TEAM_NUM = T.TEAM_NUM
+		AND TM.USER_ID = #{userId}
+		AND TM.PART IN ('M', 'S')
+		)
+		)
+		ORDER BY T.TEAM_NUM DESC
+	</select>
+
+
+	<!-- 팀별 멘토링 목록 + 썸네일 -->
+	<select id="listByTeamWithThumb" parameterType="int" resultType="com.mis.domain.MentoringVO">
+		SELECT M.MENTORING_NUM, M.TITLE, M.CONTENT, M.REG_DATE, M.VIEW_COUNT, M.TEAM_NUM, M.WEEKLY_NUM, M.USER_ID, W.WEEK_NAME, F.FILE_NAME AS thumbFileName
+		FROM TBL_MENTORING M JOIN TBL_WEEKLY W ON M.WEEKLY_NUM = W.WEEKLY_NUM
+		LEFT JOIN (
+		SELECT MENTORING_NUM, FILE_NAME
+		FROM (
+		SELECT
+		MF.MENTORING_NUM,
+		MF.FILE_NAME,
+		ROW_NUMBER() OVER (
+		PARTITION BY MF.MENTORING_NUM
+		ORDER BY MF.FILE_NUM ASC
+		) AS RN
+		FROM TBL_MENTORING_FILE MF
+		WHERE LOWER(MF.FILE_NAME) LIKE '%.jpg'
+		OR LOWER(MF.FILE_NAME) LIKE '%.jpeg'
+		OR LOWER(MF.FILE_NAME) LIKE '%.png'
+		OR LOWER(MF.FILE_NAME) LIKE '%.gif'
+		OR LOWER(MF.FILE_NAME) LIKE '%.webp'
+		)
+		WHERE RN = 1
+		) F
+		ON F.MENTORING_NUM = M.MENTORING_NUM
+		WHERE M.TEAM_NUM = #{value}
+		ORDER BY
+		M.MENTORING_NUM DESC
+	</select>
+
+
+	<!-- 댓글 수 -->
+	<select id="countComt" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_COMT
+		WHERE MENTORING_NUM = #{value}
+	</select>
+
+</mapper>

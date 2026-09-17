@@ -1,0 +1,289 @@
+/* ===== 관리자용 - 멘토, 멘티 상세(읽기) (✅ mento-register 규격 1:1) ===== */
+
+:root{
+  --brand:#8b0029;
+  --line:#e0e0e0;
+  --muted:#666;
+}
+
+html, body{
+  overflow-x:hidden;
+}
+
+.mento-read{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.mento-read__container{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ✅ 제목 시작점 = mento-register__title 과 동일 */
+.mento-read__title{
+  margin:10px 0 14px;
+  font-size:22px;
+  font-weight:400;
+  color:var(--brand);
+  letter-spacing:-0.2px;
+  line-height:1.2;
+}
+
+/* ✅ divider 톤/간격 동일 */
+.mento-read__divider{
+  height:1px;
+  background:color-mix(in srgb, var(--line) 70%, #fff);
+  margin-bottom:18px;
+}
+
+/* ✅ form 폭/정렬 동일 (가운데정렬 금지) */
+.mento-read__form{
+  width:100%;
+  max-width:920px;
+  min-width:0;
+}
+
+/* ===== rows (라벨 100px 동일) ===== */
+.mento-read__row{
+  display:grid;
+  grid-template-columns:100px 1fr;
+  gap:14px;
+  margin:14px 0;
+  min-width:0;
+}
+
+.mento-read__label{
+  font-weight:400;
+  padding-top:10px;
+  white-space:nowrap;
+  color:#111;
+}
+
+.mento-read__field{
+  min-width:0;
+}
+
+/* ===== inputs (height 40 + margin-left 30 동일) ===== */
+.mento-read__input,
+.mento-read__select,
+.mento-read__textarea{
+  width:100%;
+  height:40px;
+  background:#f5f5f796;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:0 14px;
+  font-size:14px;
+  outline:none;
+  margin-left:30px;
+  box-sizing:border-box;
+}
+
+.mento-read__textarea{
+  height:auto;
+  min-height:260px;
+  padding:12px 14px;
+  resize:vertical;
+  line-height:1.45;
+}
+
+.mento-read__input:focus,
+.mento-read__select:focus,
+.mento-read__textarea:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+/* ===== select (wrap 폭/기준선 동일) ===== */
+.mento-read__select{
+  appearance:none;
+  -webkit-appearance:none;
+  -moz-appearance:none;
+  padding-right:34px;
+}
+.mento-read__select::-ms-expand{ display:none; }
+
+.mento-read__select-wrap{
+  position:relative;
+  width:min(240px, 100%);
+  margin-left:30px;
+}
+.mento-read__select-wrap .mento-read__select{ margin-left:0; }
+
+.mento-read__caret{
+  position:absolute;
+  right:12px;
+  top:50%;
+  transform:translateY(-50%);
+  font-size:12px;
+  pointer-events:none;
+  opacity:.65;
+}
+
+/* ===== file (기준선 동일) ===== */
+.mento-read__file-row{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-left:30px;
+  flex-wrap:wrap;
+  min-width:0;
+}
+
+.mento-read__file-input{ display:none; }
+
+/* ===== 버튼 규격: mento-register 와 동일(32px) ===== */
+.mento-read__file-btn,
+.mento-read__btn,
+.mento-read__id-check-btn{
+  height:32px;
+  line-height:32px;
+  padding:0 20px;
+  border-radius:10px;
+  border:0;
+  font-weight:400;
+  cursor:pointer;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:filter .15s ease, transform .05s ease;
+}
+
+/* 파일 버튼 톤 동일 */
+.mento-read__file-btn{ background:#9e9e9e; color:#fff; }
+
+/* 상세 버튼 컬러(너 원래 쓰던 것 유지) */
+.mento-read__btn--edit{ background:#c98f97; color:#fff; }
+.mento-read__btn--delete{ background:var(--brand); color:#fff; }
+.mento-read__btn--close{ background:#8f8f8f; color:#fff; }
+
+/* (혹시 primary/ghost 쓰면 대응) */
+.mento-read__btn--primary{ background:var(--brand); color:#fff; }
+.mento-read__btn--ghost{ background:#b3b3b3; color:#fff; }
+
+.mento-read__file-btn:hover,
+.mento-read__btn:hover,
+.mento-read__id-check-btn:hover{
+  filter:brightness(1.03);
+}
+.mento-read__file-btn:active,
+.mento-read__btn:active,
+.mento-read__id-check-btn:active{
+  transform:translateY(1px);
+}
+
+.mento-read__file-name{
+  font-size:13px;
+  color:var(--muted);
+  max-width:500px;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+}
+
+/* ===== actions (오른쪽 고정 동일) ===== */
+.mento-read__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap;
+}
+
+/* ===== inline field (id + 버튼) : mento-register 동일 ===== */
+.mento-read__field--inline{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  width:100%;
+  box-sizing:border-box;
+  margin-left:30px;
+  flex-wrap:wrap;
+  min-width:0;
+}
+
+.mento-read__field--inline .mento-read__input{
+  margin-left:0;
+  flex:1 1 260px;
+  min-width:0;
+}
+
+.mento-read__id-check-btn{
+  flex:0 0 auto;
+  min-width:96px;
+  background:var(--brand);
+  color:#fff;
+}
+
+/* message (기준선 동일) */
+.mento-read__id-msg{
+  margin-left:30px;
+  font-size:13px;
+  font-weight:400;
+}
+.mento-read__id-msg--ok{ color:#2e7d32; }
+.mento-read__id-msg--fail{ color:#d32f2f; }
+
+/* =========================
+   반응형 (mento-register 동일)
+   ========================= */
+
+/* 태블릿 */
+@media (max-width:1024px){
+  .mento-read{ padding:22px 18px 34px; }
+
+  .mento-read__row{
+    grid-template-columns:90px 1fr;
+  }
+
+  .mento-read__input,
+  .mento-read__select,
+  .mento-read__textarea{
+    margin-left:0;
+  }
+
+  .mento-read__select-wrap,
+  .mento-read__file-row,
+  .mento-read__field--inline,
+  .mento-read__id-msg{
+    margin-left:0;
+  }
+}
+
+/* 모바일 */
+@media (max-width:720px){
+  .mento-read{
+    padding:20px 16px 32px;
+  }
+
+  .mento-read__row{
+    grid-template-columns:1fr;
+    gap:8px;
+    margin:12px 0;
+  }
+
+  .mento-read__label{
+    padding-top:0;
+  }
+
+  .mento-read__textarea{
+    min-height:200px;
+  }
+
+  /* 🔥 버튼 위치 그대로 오른쪽 유지 (flex-start 없음) */
+}
+
+/* 작은 모바일 */
+@media (max-width:420px){
+  .mento-read__btn,
+  .mento-read__file-btn,
+  .mento-read__id-check-btn{
+    padding:0 14px;
+  }
+}

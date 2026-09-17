@@ -1,0 +1,224 @@
+/* ===== 관리자용 - 멘토, 멘티 목록 (POPUP: 테이블 유지 + 유동 컬럼) ===== */
+
+
+:root {
+  --brand: #8b0029;
+  --line: #ddd;
+  --muted: #666;
+}
+
+html, body{ height:100%; }
+body{ margin:0; background:#fff; }
+
+/* ===== 팝업용 레이아웃 ===== */
+main.mento-main{
+  padding:12px 12px 16px;
+  background:#fff;
+  min-width:0;
+  max-height:100vh;
+  overflow:auto;
+}
+
+.mento-wrap{
+  width:100%;
+  max-width:380px;      /* 팝업 폭 */
+  margin:0 auto;
+  min-width:0;
+}
+
+/* 타이틀 */
+.mento-title{
+  margin: 6px 0 12px;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#8b0029;
+  font-size:18px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* toolbar */
+.mento-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin: 0 0 12px;
+  flex-wrap:wrap;
+}
+.mento-search{
+  position:relative;
+  min-width:180px;
+  flex: 1 1 auto;
+}
+.mento-search input{
+  width:100%;
+  height:38px;
+  padding: 0 12px 0 36px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+  background:#fff;
+}
+.mento-search input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+.mento-search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  opacity:.55;
+  color:#111;
+}
+.mento-btn{
+  height:38px;
+  padding:0 14px;
+  border:0;
+  border-radius:10px;
+  background:var(--brand);
+  color:#fff;
+  font-weight:400;
+  cursor:pointer;
+}
+.mento-btn:hover{ filter:brightness(1.03); }
+.mento-btn:active{ transform: translateY(1px); }
+.mento-btn:focus-visible{
+  outline:2px solid color-mix(in srgb, var(--brand) 40%, #fff);
+  outline-offset:2px;
+}
+
+/* ===== table: ✅ 고정폭/카드모드 제거, 유동 컬럼으로 전환 ===== */
+.mento-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing: 0 10px;
+
+  /* ✅ 핵심: fixed 제거하고 자동 레이아웃 */
+  table-layout: auto;
+}
+
+.mento-table thead th{
+  text-align:left;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:400;
+  padding: 0 10px 6px;
+  white-space:nowrap; /* 헤더는 줄바꿈 방지 */
+}
+
+.mento-table tbody tr{
+  background:#f2f2f2;
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.mento-table tbody tr:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(0,0,0,.10);
+}
+
+.mento-table tbody td{
+  padding: 11px 10px;
+  font-size:14px;
+  vertical-align:middle;
+  min-width:0; /* ✅ ellipsis가 먹기 위한 필수 */
+}
+
+.mento-table tbody td:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  font-weight:400;
+  color:#111;
+  white-space:nowrap;
+}
+.mento-table tbody td:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+}
+
+/* ✅ 컬럼 폭: %로 유연하게 (팝업 줄어들면 함께 줄어듦) */
+.col-no{ width:12%; white-space:nowrap; }
+.col-title{ width:28%; font-weight:400; }
+.col-date{ width:32%; }    /* 학교 */
+.col-views{ width:28%; }   /* 생년월일 */
+
+/* ✅ “짤림 방지” 정책
+   - 이름/학교는 말줄임으로 레이아웃 유지
+   - 생년월일은 줄바꿈 금지(깨지지 않게) */
+.mento-table tbody td.col-title,
+.mento-table tbody td.col-date{
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.mento-table tbody td.col-views{
+  font-variant-numeric: tabular-nums;
+  white-space:nowrap;
+  word-break: keep-all;
+}
+
+/* pager */
+.mento-pager{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin: 16px 0 0;
+  flex-wrap:wrap;
+}
+.pager-page,
+.pager-chev{
+  height:32px;
+  min-width:32px;
+  padding:0 10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  user-select:none;
+  font-weight:400;
+}
+.pager-chev{
+  border:0;
+  background:transparent;
+  color:#666;
+}
+.pager-page:hover{ background:#fafafa; }
+.pager-chev:hover{ background:#f3f3f3; }
+.pager-page.is-active{
+  background:var(--brand);
+  color:#fff;
+  border-color: transparent;
+}
+
+/* ===== a 링크 티 제거 ===== */
+.mento-table td.col-title > a,
+.mento-table td.col-title > a:visited,
+.mento-table td.col-title > a:hover,
+.mento-table td.col-title > a:active{
+  color: inherit !important;
+  text-decoration: none !important;
+}
+.mento-table td.col-title > a{
+  display: block;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+/* ===== 아주 작은 폭에서만 글자/패딩 살짝 줄여서 더 잘 맞추기 ===== */
+@media (max-width: 360px){
+  .mento-table tbody td{ padding: 10px 8px; font-size:13px; }
+  .mento-table thead th{ padding: 0 8px 6px; font-size:12px; }
+  .pager-page, .pager-chev{ height:30px; min-width:30px; }
+}

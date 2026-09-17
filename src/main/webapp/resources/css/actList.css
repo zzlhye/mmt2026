@@ -1,0 +1,382 @@
+/* ===== 활동보고서 목록 (관리자), 팀 관리 목록 ===== */
+main.activity-main{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.activity-wrap{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+
+  /* ✅ 드롭다운 잘림 방지: overflow 숨김 제거 */
+  overflow: visible;
+  /* overflow-x:hidden;  <-- 제거 */
+}
+
+/* 타이틀 */
+.activity-title{
+  margin: 10px 0 20px;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#8b0029;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* =========================================================
+   toolbar
+   - 기본(드롭다운 툴바): 왼쪽
+   - 검색/등록 툴바(.activity-toolbar--search): 오른쪽
+   ========================================================= */
+.activity-toolbar{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin: 9px 0 14px;
+  flex-wrap:wrap;
+  justify-content:flex-start; /* ✅ 기본: 왼쪽 */
+
+  /* ✅ 혹시 툴바가 잘라먹는 케이스 예방 */
+  overflow: visible;
+}
+
+/* ✅ 2번째 툴바(검색+등록)만 오른쪽 */
+.activity-toolbar--search{
+  justify-content:flex-end;   /* ✅ 요청대로: 서치바 오른쪽 */
+}
+
+/* ===== Dropdown ===== */
+.activity-dropdown{
+  position:relative;
+  display:inline-block;
+
+  /* ✅ 다른 요소에 깔리지 않게 */
+  z-index: 9999;
+}
+
+.activity-term-btn{
+  border:0;
+  background:transparent;
+  color:#c56b73;
+  font-size:18px;
+  font-weight:400;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:0;
+}
+
+.activity-arrow{
+  display:inline-block;
+  transition: transform .15s ease;
+}
+.activity-dropdown.open .activity-arrow{
+  transform: rotate(180deg);
+}
+
+.activity-menu{
+  position:absolute;
+  top: calc(100% + 10px);
+  left: -10px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  padding:6px;
+  list-style:none;
+  margin:0;
+  display:none;
+  min-width:200px;
+
+  /* ✅ 충분히 위로 */
+  z-index: 100000;
+}
+
+.activity-dropdown.open .activity-menu{ display:block; }
+
+.activity-menu li{
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:400;
+  color:#111;
+  user-select:none;
+  outline:none;
+}
+
+.activity-menu li:hover,
+.activity-menu li:focus{
+  background:#f5f5f5;
+}
+
+.activity-menu li[aria-selected="true"]{
+  background: color-mix(in srgb, var(--brand) 10%, #fff);
+}
+
+/* ===== 검색바 ===== */
+.activity-search{
+  position:relative;
+  min-width:260px;
+  flex:0 1 360px;
+}
+
+.activity-search input{
+  width:100%;
+  height:40px;
+  padding: 0 12px 0 38px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+  background:#fff;
+}
+
+.activity-search input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+.activity-search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  opacity:.55;
+  color:#111;
+}
+
+/* 등록 버튼 */
+.activity-btn{
+  height:40px;
+  padding:0 16px;
+  border:0;
+  border-radius:10px;
+  background:var(--brand);
+  color:#fff;
+  font-weight:400;
+  cursor:pointer;
+}
+.activity-btn:hover{ filter:brightness(1.03); }
+.activity-btn:active{ transform: translateY(1px); }
+.activity-btn:focus-visible{
+  outline:2px solid color-mix(in srgb, var(--brand) 40%, #fff);
+  outline-offset:2px;
+}
+
+/* ===== table ===== */
+.activity-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing: 0 10px;
+}
+
+.activity-table thead th{
+  text-align:left;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:400;
+  padding: 0 12px 6px;
+}
+
+.activity-table tbody tr{
+  background:#f5f5f796;
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.activity-table tbody tr:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(0,0,0,.10);
+}
+
+.activity-table tbody td{
+  padding: 12px 12px;
+  font-size:14px;
+  vertical-align:middle;
+}
+
+.activity-table tbody td:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  font-weight:400;
+  color:#111;
+}
+
+.activity-table tbody td:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+}
+
+.col-no{ width:84px; }
+.col-date{ width:150px; font-variant-numeric: tabular-nums; }
+.col-views{ width:90px; text-align:right; font-variant-numeric: tabular-nums; }
+.activity-table tbody td.col-views{ padding-right:58px; }
+
+.col-title{
+  font-weight:400;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width:1px;
+}
+
+.col-title a{
+  text-decoration: none;
+  color: inherit;   /* 부모 글자색 그대로 사용 */
+}
+
+/* ===== pager ===== */
+.activity-pager{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin: 18px 0 0;
+  flex-wrap:wrap;
+}
+
+.activity-page,
+.activity-chev{
+  height:34px;
+  min-width:34px;
+  padding:0 10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  user-select:none;
+  font-weight:400;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.activity-chev{
+  border:0;
+  background:transparent;
+  color:#666;
+}
+
+.activity-page:hover{ background:#fafafa; }
+.activity-chev:hover{ background:#f3f3f3; }
+
+.activity-page.is-active{
+  background:var(--brand);
+  color:#fff;
+  border-color: transparent;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px){
+  main.activity-main{ padding:20px 16px 32px; }
+
+  /* ✅ 모바일에서도 "오른쪽 정렬" 유지하되, 검색/버튼이 줄바꿈 되면 보기 좋게 */
+  .activity-toolbar--search{
+    justify-content:flex-end;
+  }
+  .activity-toolbar--search .activity-search{
+    flex: 1 1 360px; /* 너무 작게 쪼그라들지 않게 */
+    min-width:260px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .activity-arrow{ transition:none !important; }
+}
+
+/* ===== 모바일 카드형 ===== */
+@media (max-width: 720px){
+  .activity-table thead{ display:none; }
+  .activity-table,
+  .activity-table tbody,
+  .activity-table tr,
+  .activity-table td{
+    display:block;
+    width:100%;
+  }
+
+  .activity-table{ border-spacing: 0 18px; }
+
+  .activity-table tbody tr{
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+
+  .activity-table tbody td{ padding: 12px 14px; }
+
+  .col-title{
+    white-space:normal;
+    max-width:none;
+    line-height:1.35;
+  }
+
+  .activity-table tbody td.col-date,
+  .activity-table tbody td.col-views{
+    display:inline-block;
+    width:auto;
+    color:var(--muted);
+    font-size:13px;
+    padding-top:0;
+  }
+
+  .activity-table tbody td.col-views{
+    text-align:left;
+    margin-left:10px;
+    padding-right:0;
+  }
+
+  .activity-table tbody td.col-date::before{
+    content:"날짜: ";
+    color:#999;
+    font-weight:400;
+  }
+  .activity-table tbody td.col-views::before{
+    content:"작성자: ";
+    color:#999;
+    font-weight:400;
+  }
+
+  .activity-pager{ margin-top:26px; }
+
+  .activity-table td.col-views a{
+    white-space:normal;
+    word-break:break-word;
+  }
+}
+
+/* ===== 데스크탑에서 3번째 td 폭 넓히기 ===== */
+@media (min-width: 721px){
+  .activity-table{ table-layout: fixed; }
+
+  .activity-table th.col-date,
+  .activity-table td.col-date{ width:160px; text-align:left; }
+
+  .activity-table th.col-views,
+  .activity-table td.col-views{ width:160px; text-align:left; }
+
+  .activity-table tbody td.col-views{ padding-right:12px; }
+}
+
+/* 링크 스타일 제거 */
+.activity-table td.col-views a,
+.activity-table td.col-views a:visited,
+.activity-table td.col-views a:hover,
+.activity-table td.col-views a:active{
+  color: inherit;
+  text-decoration: none;
+}
+.activity-table td.col-views a{ display:inline-block; }

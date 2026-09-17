@@ -1,0 +1,348 @@
+:root{
+  --brand:#6b1d3e;          /* ✅ 버튼/링크/포커스 포인트 */
+  --text:#111;
+  --muted:#777;
+  --line:#d9d9d9;           /* ✅ 선 색(유지) */
+  --bg:#ffffff;
+
+  --cardMax: 600px;
+  --headerH: 56px;          /* ✅ 유지 */
+
+  --border-light:#e6e6e6;
+  --text-sub:#777;
+}
+
+/* ✅ 스크롤 생겨도 폭 흔들림 최소화 */
+html{ scrollbar-gutter: stable; }
+
+/* ✅ 스크롤은 되지만 스크롤바는 숨김(브라우저별) */
+html, body{
+  -ms-overflow-style: none;  /* IE/구형 Edge */
+  scrollbar-width: none;     /* Firefox */
+}
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+  width: 0;
+  height: 0;                 /* Chrome/Safari */
+}
+
+*{ box-sizing:border-box; }
+
+body{
+  margin:0;
+  font-family: -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+  color:var(--text);
+  background:var(--bg);
+  min-height:100dvh;
+  display:flex;
+  flex-direction:column;
+}
+
+/* =========================
+   Header (높이 유지 + 가로 중앙 고정)
+   ========================= */
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:10;
+  height:var(--headerH);
+  background:#fff;
+
+  /* ✅ 로고가 커도 선이 안 가려지게 border 대신 after로 */
+  border-bottom:0;
+
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  /* ✅ 드롭다운/로고 잘림 방지 */
+  overflow: visible;
+}
+
+/* ✅ 헤더 선(항상 위에 보이게) */
+.topbar::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:1px;
+  background: var(--line);
+  z-index: 999999;
+  pointer-events:none;
+}
+
+/* ✅ 내부 로고를 중앙에 고정 */
+.brand{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  pointer-events:none;
+}
+
+/* ✅ 이미지+텍스트 정렬 + 간격 제어 */
+.brand-link{
+  display:inline-flex;
+  align-items:center;
+
+  /* 🔥 전체 간격(‘이미지+ESD’ 묶음 ↔ 서브텍스트) */
+  gap:5px;
+
+  text-decoration:none;
+  pointer-events:auto;
+  line-height:1;
+  white-space:nowrap;
+
+  /* ✅ 세로 정렬 흔들림 방지 */
+  height: var(--headerH);
+}
+
+/* 🔥 이미지와 ESD를 가깝게 붙이기 위한 묶음 */
+.brand-main-wrap{
+  display:flex;
+  align-items:center;
+
+  /* 🔥 이미지 ↔ ESD 간격 */
+  gap:4px;
+}
+
+.brand-main{
+  font-weight:400;
+  font-size:18px;
+  letter-spacing:-0.4px;
+  color:var(--brand);
+}
+
+.brand-sub{
+  font-weight:400;
+  font-size:12px;
+  color:#555;
+  position:relative;
+  top:2px;
+}
+
+/* ===== 이미지 로고 ===== */
+.brand-logo{
+  height:60px;          /* ✅ 헤더 56px 기준 */
+  width:auto;
+  object-fit:contain;
+  flex-shrink:0;
+
+  /* ✅ 데스크탑: 로그인 기존 보정 유지 */
+  margin-right:-15px;
+
+  /* ✅ inline 이미지 baseline 여백 제거 */
+  display:block;
+
+  /* ✅ 미세 오차 보정 */
+  position:relative;
+  top:-0.5px;
+}
+
+/* =========================
+   Main Layout (가로 중앙 기준선 통일)
+   ========================= */
+.page{
+  flex:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:100px 16px;
+  background:#fff;
+}
+
+/* ✅ 전체 영역 중앙 기준 */
+.login{
+  width:100%;
+  max-width:var(--cardMax);
+  margin:0 auto;
+  text-align:center;
+  padding:0 6px;
+}
+
+.login-title{
+  margin:0;
+  font-size:24px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+}
+
+.login-desc{
+  margin:16px auto 40px;   /* ✅ auto로 가로 중앙 */
+  max-width:420px;         /* ✅ 문장도 폼 폭과 맞춰 중앙감 */
+  font-size:14px;
+  color:var(--text-sub);
+  line-height:1.6;
+}
+
+/* =========================
+   Form (가로 중앙 딱 맞추기: 폼 폭 420 고정 추천)
+   ========================= */
+.login-form{
+  width:100%;
+  max-width:420px;        /* ✅ 여기서 중앙 기준선이 “딱” 잡힘 */
+  margin:0 auto;          /* ✅ 폼 자체 중앙 */
+  text-align:left;
+}
+
+.form-group{
+  margin-bottom:18px;
+}
+
+.form-group label{
+  display:block;
+  font-size:13px;
+  font-weight:400;
+  margin-bottom:8px;
+  color:#111;
+}
+
+.form-group input{
+  width:100%;
+  padding:12px 12px;
+  border:1px solid var(--border-light);
+  border-radius:6px;      /* ✅ 조금 더 깔끔 */
+  font-size:14px;
+  outline:none;
+  background:#fff;
+}
+
+.form-group input:focus{
+  border-color: rgba(107,29,62,.55);   /* brand 기반 */
+  box-shadow: 0 0 0 3px rgba(107,29,62,.12);
+}
+
+.form-actions{
+  margin-top:20px;
+}
+
+/* 큰 로그인 버튼 */
+.btn-primary{
+  width:100%;
+  padding:14px 12px;
+  background: var(--brand);
+  color:#fff;
+  border:none;
+  border-radius:8px;
+  font-size:15px;
+  font-weight:400;
+  cursor:pointer;
+}
+
+.btn-primary:hover{
+  filter:brightness(0.92);
+}
+
+/* =========================
+   Footer links under button
+   ========================= */
+.login-footer{
+  margin-top:22px;
+  text-align:center;
+  font-size:13px;
+  color:var(--text-sub);
+}
+
+.login-footer-text{
+  margin-bottom:8px;
+}
+
+.login-footer-links{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+
+.login-footer-links a{
+  color: var(--brand);
+  font-weight:400;
+  text-decoration:none;
+}
+
+.login-footer-links a:hover{
+  text-decoration:underline;
+}
+
+.sep{
+  color:#bdbdbd;
+}
+
+/* =========================
+   Site Footer (얇은 상단 경계선)
+   ========================= */
+.site-footer{
+  position:relative;
+  background:#f7f7f7;
+  color:#666;
+  padding:45px 16px;
+  font-size:12px;
+  line-height:1.5;
+}
+
+.site-footer::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:1px;
+  background: var(--line);
+  transform: scaleY(0.5);
+  transform-origin: top;
+}
+
+.footer-links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px 14px;
+  justify-content:center;
+  margin-bottom:8px;
+}
+
+.footer-links a{
+  color:#666;
+  text-decoration:none;
+  opacity:.95;
+}
+
+.footer-links a:hover{
+  text-decoration:underline;
+}
+
+.footer-meta{
+  text-align:center;
+  color:#666;
+}
+
+/* =========================
+   Responsive
+   - ✅ PC에서 창만 줄였을 때는 로고가 작아지지 않게
+   - ✅ "진짜 모바일(터치)"에서만 24px 적용
+   ========================= */
+
+/* ✅ 진짜 모바일(터치 기기)에서만 로고 축소 */
+@media (hover: none) and (pointer: coarse){
+  .brand-logo{
+    height:24px;
+    margin-right:-2px;
+    top:0;
+  }
+
+  .brand-main{ font-size:16px; }
+  .brand-sub{ font-size:11px; }
+}
+
+@media (max-width: 768px){
+  .page{
+    padding:32px 16px 36px;
+  }
+}
+
+@media (max-width: 420px){
+  :root{ --headerH:52px; }
+
+  /* ✅ 기존 코드에 있던 .logo는 실제 사용 클래스가 아니라면 제거해도 됨 */
+  /* .logo{ height:110px; } */
+}

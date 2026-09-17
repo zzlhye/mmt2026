@@ -1,0 +1,246 @@
+/* ===== 공지사항 상세 (✅ mento-register 최종 규격에 맞춤) =====
+   - container: 1000
+   - title/카드/본문 시작점: "가운데(auto)" 제거 → 왼쪽 정렬(등록 규격)
+   - 버튼: 32px(read 규격) + actions 항상 오른쪽 고정(모바일에서도 유지)
+   - 반응형: 1024/720/420 (mento-register 패턴)
+*/
+
+:root{
+  --brand:#8b0029;
+  --line:#e0e0e0;
+  --muted:#666;
+}
+
+html, body{
+  overflow-x:hidden;
+}
+
+.notice-read{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+/* ✅ flex 금지(원본 유지) */
+.notice-read__container{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ✅ mento-register 규격: title 가운데정렬(auto) 제거 */
+.notice-read__title{
+  margin:10px 0 1px;
+  font-size:15px;           /* ✅ 등록/상세 타이틀 규격 */
+  font-weight:400;
+  color:var(--brand);
+  letter-spacing:-0.2px;
+  line-height:1.2;
+}
+
+/* ✅ 카드도 form 폭 규격으로(등록 max-width 920 패턴) */
+.notice-read__card{
+  width:100%;
+  max-width:920px;
+  min-width:0;
+  margin:0;                 /* ✅ auto 제거(왼쪽 정렬) */
+}
+
+/* (원본 유지) */
+.notice-read__headline{
+  display:flex;
+  justify-content:space-between;
+  align-items:baseline;
+  gap:16px;
+}
+
+.notice-read__subject{
+  margin:0;
+  font-size:18px;
+  font-weight:400;
+  color:#111;
+  letter-spacing:-0.2px;
+}
+
+.notice-read__meta{
+  display:flex;
+  gap:8px;
+  font-size:13px;
+  color:#777;
+  white-space:nowrap;
+}
+
+.notice-read__meta-label{
+  color:#999;
+  font-weight:400;
+}
+
+.notice-read__rule{
+  height:1px;
+  background:color-mix(in srgb, var(--line) 70%, #fff);
+  margin:10px 0 18px;
+}
+
+.notice-read__body{
+  font-size:13.5px;
+  line-height:1.85;
+  color:#222;
+  min-height:320px;
+}
+
+.notice-read__body p{
+  margin:0 0 12px;
+}
+
+.notice-read__dash{
+  margin:6px 0 12px;
+}
+.notice-read__dash > div{
+  margin:4px 0;
+}
+
+.notice-read__bottom-rule{
+  height:1px;
+  background:#bfbfbf;
+  margin:18px 0 14px;
+}
+
+.notice-read__files{
+  padding-left:6px;
+}
+
+/* ===== uploadedList (원본 유지) ===== */
+.uploadedList{
+  padding:0;
+  margin-top:12px;
+}
+
+.uploadedList li{
+  list-style:none;
+  margin:6px 0;
+}
+
+.uploadedList .card{
+  background:transparent !important;
+  border:0 !important;
+  box-shadow:none !important;
+  border-radius:0 !important;
+}
+
+.uploadedList .card .p-2{
+  padding:0 !important;
+}
+
+.uploadedList .row{
+  display:flex !important;
+  align-items:center;
+  gap:8px;
+  margin:0 !important;
+  width:100% !important;
+}
+
+.uploadedList .col-auto{
+  padding:0 !important;
+  flex:0 0 auto;
+}
+
+.uploadedList img.avatar-sm{
+  width:18px !important;
+  height:18px !important;
+  border:0 !important;
+  border-radius:0 !important;
+  background:transparent !important;
+  object-fit:contain !important;
+}
+
+.uploadedList .col.pl-0{
+  flex:1 1 auto !important;
+  min-width:0 !important;
+  padding:0 !important;
+  flex:1 1 100% !important;
+}
+
+.uploadedList .col.pl-0 a{
+  display:block;
+  font-size:14px;
+  font-weight:400;
+  color:#222;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-decoration:none;
+  width:100% !important;
+  max-width:none !important;
+}
+
+.uploadedList .col.pl-0 a:hover{
+  text-decoration:none;
+  color:var(--brand);
+}
+
+/* ===== actions (🔥 항상 오른쪽 고정) ===== */
+.notice-read__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap;
+}
+
+/* ✅ 버튼: read 규격(32px) */
+.notice-read__btn{
+  height:32px;
+  line-height:32px;
+  padding:0 20px;
+  border-radius:10px;
+  border:0;
+  font-weight:400;
+  cursor:pointer;
+  color:#fff;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:filter .15s ease, transform .05s ease;
+}
+
+.notice-read__btn:hover{ filter:brightness(1.03); }
+.notice-read__btn:active{ transform:translateY(1px); }
+
+.notice-read__btn--edit{ background:#c98f97; }
+.notice-read__btn--delete{ background:var(--brand); }
+.notice-read__btn--close{ background:#8f8f8f; }
+
+/* =========================
+   반응형 (mento-register 최종 규격)
+   ========================= */
+
+/* 태블릿 */
+@media (max-width:1024px){
+  .notice-read{
+    padding:22px 18px 34px;
+  }
+}
+
+/* 모바일 */
+@media (max-width:720px){
+  .notice-read{
+    padding:20px 16px 32px;
+  }
+
+  .notice-read__headline{
+    flex-direction:column;
+    align-items:flex-start;
+  }
+
+  /* 🔥 actions 오른쪽 고정 유지 (flex-start로 바꾸지 않음) */
+}
+
+/* 작은 모바일 */
+@media (max-width:420px){
+  .notice-read__btn{
+    padding:0 14px;
+  }
+}

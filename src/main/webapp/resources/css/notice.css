@@ -1,0 +1,255 @@
+/* ===== 공지사항, 사전교육, 팀 목록 ===== */
+main.notice-main{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.notice-wrap{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ✅ 타이틀(term-btn 톤) */
+.notice-title{
+  margin: 10px 0 20px;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#8b0029;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* toolbar */
+.notice-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin: 0 0 14px;
+  flex-wrap:wrap;
+}
+.notice-search{
+  position:relative;
+  min-width: 260px;
+  flex: 0 1 360px;
+}
+.notice-search input{
+  width:100%;
+  height:40px;
+  padding: 0 12px 0 38px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+  background:#fff;
+}
+.notice-search input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+.notice-search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  opacity:.55;
+  color:#111;
+}
+.notice-btn{
+  height:40px;
+  padding:0 16px;
+  border:0;
+  border-radius:10px;
+  background:var(--brand);
+  color:#fff;
+  font-weight:400;
+  cursor:pointer;
+}
+.notice-btn:hover{ filter:brightness(1.03); }
+.notice-btn:active{ transform: translateY(1px); }
+.notice-btn:focus-visible{
+  outline:2px solid color-mix(in srgb, var(--brand) 40%, #fff);
+  outline-offset:2px;
+}
+
+/* table */
+.notice-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing: 0 10px;
+}
+.notice-table thead th{
+  text-align:left;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:400;
+  padding: 0 12px 6px;
+}
+.notice-table tbody tr{
+  background:#f5f5f796;
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.notice-table tbody tr:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(0,0,0,.10);
+}
+.notice-table tbody td{
+  padding: 12px 12px;
+  font-size:14px;
+  vertical-align:middle;
+}
+.notice-table tbody td:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  font-weight:400;
+  color:#111;
+}
+.notice-table tbody td:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+}
+
+.col-no{ width:84px; }
+.col-date{ width:150px; font-variant-numeric: tabular-nums; }
+.col-views{
+  width:90px;
+  text-align:right;
+  font-variant-numeric: tabular-nums;
+}
+/* ✅ 조회수 값을 왼쪽으로 조금 이동시키는 핵심 */
+.notice-table tbody td.col-views{
+  padding-right:58px;
+}
+
+.col-title{
+  font-weight:400;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width: 1px;
+}
+
+/* pager */
+.notice-pager{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin: 18px 0 0;
+  flex-wrap:wrap;
+}
+.pager-page,
+.pager-chev{
+  height:34px;
+  min-width:34px;
+  padding:0 10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  user-select:none;
+  font-weight:400;
+}
+.pager-chev{
+  border:0;
+  background:transparent;
+  color:#666;
+}
+.pager-page:hover{ background:#fafafa; }
+.pager-chev:hover{ background:#f3f3f3; }
+.pager-page.is-active{
+  background:var(--brand);
+  color:#fff;
+  border-color: transparent;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px){
+  main.notice-main{ padding:20px 16px 32px; }
+}
+
+/* ✅ 모바일 카드 간격/여백 개선 */
+@media (max-width: 720px){
+  .notice-table thead{ display:none; }
+  .notice-table,
+  .notice-table tbody,
+  .notice-table tr,
+  .notice-table td{
+    display:block;
+    width:100%;
+  }
+
+  .notice-table{ border-spacing: 0 18px; }
+
+  .notice-table tbody tr{
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+
+  .notice-table tbody td{
+    padding: 12px 14px;
+  }
+
+  .col-title{
+    white-space:normal;
+    max-width:none;
+    line-height:1.35;
+  }
+
+  .notice-table tbody td.col-date,
+  .notice-table tbody td.col-views{
+    display:inline-block;
+    width:auto;
+    color:var(--muted);
+    font-size:13px;
+    padding-top:0;
+  }
+  .notice-table tbody td.col-views{
+    text-align:left;
+    margin-left:10px;
+    padding-right:0;
+  }
+
+  .notice-table tbody td.col-date::before{
+    content:"날짜: ";
+    color:#999;
+    font-weight:400;
+  }
+  .notice-table tbody td.col-views::before{
+    content:"조회수: ";
+    color:#999;
+    font-weight:400;
+  }
+
+  .notice-pager{ margin-top: 26px; }
+}
+
+/* ===== 🔥 a 링크 티 제거 (추가된 유일한 부분) ===== */
+.notice-table td.col-title > a,
+.notice-table td.col-title > a:visited,
+.notice-table td.col-title > a:hover,
+.notice-table td.col-title > a:active{
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.notice-table td.col-title > a{
+  display: block;
+}
+
+
+
+

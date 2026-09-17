@@ -1,0 +1,277 @@
+/* ===== 관리자용 - 멘토/멘티 상세 + 팀원목록 (✅ mento-register 최종 규격에 맞춤) =====
+   - 토큰: --brand/--line/--muted
+   - container 1000 / form 920
+   - title/ divider/ layout: mento-register 동일(가운데정렬 X)
+   - input: height 40 + margin-left 30 (PC 기준선)
+   - 버튼: 32px (read 규격) + actions 항상 오른쪽 고정
+   - 반응형: 1024(기준선 제거) / 720(라벨 스택) / 420(패딩 축소)
+*/
+
+:root{
+  --brand:#8b0029;
+  --line:#e0e0e0;
+  --muted:#666;
+}
+
+html, body{
+  overflow-x:hidden;
+}
+
+.mento-read{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.mento-read__container{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ✅ 제목 시작점: mento-register 기준(가운데정렬 제거) */
+.mento-read__title{
+  margin:10px 0 14px;
+  font-size:22px;
+  font-weight:400;
+  color:var(--brand);
+  letter-spacing:-0.2px;
+  line-height:1.2;
+}
+
+.mento-read__divider{
+  height:1px;
+  background:color-mix(in srgb, var(--line) 70%, #fff);
+  margin-bottom:18px;
+}
+
+/* ✅ form 폭: mento-register 기준 */
+.mento-read__form{
+  width:100%;
+  max-width:920px;
+  min-width:0;
+}
+
+/* ===== row ===== */
+.mento-read__row{
+  display:grid;
+  grid-template-columns:100px 1fr; /* ✅ 86 -> 100 (규격 통일) */
+  gap:14px;
+  margin:14px 0;
+  min-width:0;
+}
+
+.mento-read__label{
+  font-weight:400;
+  padding-top:10px;
+  white-space:nowrap;
+  color:#111;
+}
+
+.mento-read__field{
+  min-width:0;
+}
+
+/* ===== input/textarea (✅ 95% 제거, 40px/기준선 통일) ===== */
+.mento-read__input,
+.mento-read__textarea{
+  width:100%;
+  background:#f5f5f796;
+  border:1px solid var(--line);
+  border-radius:10px;
+  font-size:14px;
+  outline:none;
+  margin-left:30px;        /* ✅ PC 기준선 */
+  box-sizing:border-box;
+}
+
+.mento-read__input{
+  height:40px;
+  padding:0 14px;
+}
+
+.mento-read__textarea{
+  min-height:220px;
+  padding:12px 14px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+.mento-read__input:focus,
+.mento-read__textarea:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+/* ===== actions (🔥 항상 오른쪽 고정) ===== */
+.mento-read__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap;
+}
+
+/* ✅ 버튼: 32px(read 규격) */
+.mento-read__btn{
+  height:32px;
+  line-height:32px;
+  padding:0 20px;
+  border-radius:10px;
+  border:0;
+  font-weight:400;
+  cursor:pointer;
+  color:#fff;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  transition: filter .15s ease, transform .05s ease;
+}
+
+.mento-read__btn:hover{ filter:brightness(1.03); }
+.mento-read__btn:active{ transform: translateY(1px); }
+
+.mento-read__btn--edit{ background:#c98f97; }
+.mento-read__btn--delete{ background:var(--brand); }
+.mento-read__btn--close{ background:#8f8f8f; }
+
+/* =========================================================
+   팀원 목록 : 멘토/멘티 줄 정렬 통일(역할 칸 고정폭)
+   역할 / 이름 / 학교라벨 / 학교input / 생년월일라벨 / 생년월일input
+   ========================================================= */
+
+/* ✅ 팀테이블도 "입력 시작점"이 mento-read input과 동일하게 맞게: margin-left 30 */
+.team-table{
+  width:100%;
+  margin-left:30px;          /* ✅ 인풋 시작점과 동일 */
+  box-sizing:border-box;
+}
+
+/* ✅ 내부 인풋들은 margin-left 없이 row 안에서 정렬 */
+.team-table__row{
+  display:grid;
+  grid-template-columns: 70px 160px auto 240px auto 140px;
+  column-gap:14px;
+  row-gap:10px;
+  align-items:center;
+  margin-bottom:10px;
+  min-width:0;
+}
+
+/* 역할 */
+.team-table__role{
+  font-weight:400;
+  font-size:14px;
+  color:#111;
+  white-space:nowrap;
+  line-height:40px;          /* ✅ input 높이와 맞춤 */
+  text-align:right;
+}
+
+/* 라벨 */
+.team-table__k{
+  font-weight:400;
+  font-size:14px;
+  color:#111;
+  white-space:nowrap;
+  line-height:40px;          /* ✅ input 높이와 맞춤 */
+  justify-self:end;
+  text-align:right;
+
+  background:none;
+  border:0;
+  padding:0;
+  border-radius:0;
+}
+
+/* input */
+.team-table__input{
+  height:40px;               /* ✅ 34 -> 40 (규격 통일) */
+  width:100%;
+  background:#f5f5f796;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:0 14px;            /* ✅ input 패딩 통일 */
+  font-size:14px;
+  box-sizing:border-box;
+  outline:none;
+}
+
+.team-table__input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+/* =========================
+   반응형 (mento-register 최종 규격)
+   ========================= */
+
+/* 태블릿: 기준선 제거 */
+@media (max-width:1024px){
+  .mento-read{
+    padding:22px 18px 34px;
+  }
+
+  .mento-read__row{
+    grid-template-columns:90px 1fr;
+  }
+
+  .mento-read__input,
+  .mento-read__textarea{
+    margin-left:0;
+  }
+
+  .team-table{
+    margin-left:0;
+  }
+}
+
+/* 모바일: 라벨/필드 스택 */
+@media (max-width:720px){
+  .mento-read{
+    padding:20px 16px 32px;
+  }
+
+  .mento-read__row{
+    grid-template-columns:1fr;
+    gap:8px;
+    margin:12px 0;
+  }
+
+  .mento-read__label{
+    padding-top:0;
+  }
+
+  .mento-read__textarea{
+    min-height:200px;
+  }
+
+  /* 팀테이블: 2열 카드처럼 */
+  .team-table{
+    width:100%;
+    margin-left:0;
+  }
+
+  .team-table__row{
+    grid-template-columns: 1fr;
+    gap:8px;
+  }
+
+  /* 역할/라벨은 위, input은 아래 */
+  .team-table__role,
+  .team-table__k{
+    text-align:left;
+    justify-self:start;
+    line-height:1.2;
+  }
+}
+
+/* 작은 모바일 */
+@media (max-width:420px){
+  .mento-read__btn{
+    padding:0 14px;
+  }
+}

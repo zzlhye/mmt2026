@@ -1,0 +1,328 @@
+/* ===== 팀 등록 (✅ 공통 규격: brand/line/muted + read 버튼 32px + 전구간 반응형 + 버튼 위치 고정) ===== */
+
+:root{
+  --brand:#8b0029;
+  --line:#e0e0e0;
+  --muted:#666;
+}
+
+html, body{
+  overflow-x:hidden;
+}
+
+.mento-register{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.mento-register__container{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+.mento-register__title{
+  margin:10px 0 14px;
+  font-size:22px;
+  font-weight:400;
+  color:var(--brand);
+  letter-spacing:-0.2px;
+  line-height:1.2;
+}
+
+.mento-register__divider{
+  height:1px;
+  background:color-mix(in srgb, var(--line) 70%, #fff);
+  margin-bottom:18px;
+}
+
+/* ✅ 폭/반응형 안전 */
+.mento-register__form{
+  width:100%;
+  max-width:920px; /* 기존 820 -> 920 (원하면 820으로) */
+}
+
+/* ===== rows ===== */
+.mento-register__row{
+  display:grid;
+  grid-template-columns:100px 1fr; /* 기존 110 -> 100 */
+  gap:14px;
+  margin:14px 0;
+  min-width:0;
+}
+
+.mento-register__label{
+  font-weight:400;
+  padding-top:10px;
+  white-space:nowrap;
+  color:#111;
+}
+
+.mento-register__field{
+  min-width:0;
+}
+
+/* ===== inputs (규격 통일: 40px) ===== */
+.mento-register__input{
+  width:100%;
+  height:40px;
+  background:#f5f5f796;
+  border:1px solid var(--line);
+  border-radius:10px;
+  padding:0 14px;
+  font-size:14px;
+  outline:none;
+  margin-left:30px; /* ✅ 데스크탑 기준선 */
+  box-sizing:border-box;
+}
+
+.mento-register__input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+
+/* ===================================================== */
+/* ✅ 공통 버튼 규격: read 동일(32px) */
+/* ===================================================== */
+.mento-register__id-check-btn,
+.menti-add-btn,
+.mento-register__btn,
+.mento-update__btn{
+  height:32px;
+  line-height:32px;
+  padding:0 20px;
+  border-radius:10px;
+  border:0;
+  font-weight:400;
+  cursor:pointer;
+
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+
+  transition:filter .15s ease, transform .05s ease;
+}
+
+.mento-register__id-check-btn:hover,
+.menti-add-btn:hover,
+.mento-register__btn:hover,
+.mento-update__btn:hover{
+  filter:brightness(1.03);
+}
+.mento-register__id-check-btn:active,
+.menti-add-btn:active,
+.mento-register__btn:active,
+.mento-update__btn:active{
+  transform:translateY(1px);
+}
+
+/* ===================================================== */
+/* 🔥 공통: 선택 버튼(멘토/멘티 동일) */
+/* ===================================================== */
+.mento-register__id-check-btn{
+  width:120px;        /* 데스크탑 기준 폭 */
+  padding:0 16px;     /* 폭이 고정이라 padding 약간 줄임 */
+  background:#b36b72; /* 요청 색 유지 */
+  color:#fff;
+  white-space:nowrap;
+}
+
+/* ===================================================== */
+/* 🔥 멘토 줄도 3칸 레이아웃으로 맞추기 */
+/* ===================================================== */
+.mento-register__field--inline{
+  display:grid;
+  grid-template-columns: 1fr 120px 36px; /* input / 선택 / X자리 */
+  gap:12px;
+  align-items:center;
+  width:100%;
+  box-sizing:border-box;
+  margin-left:30px;           /* ✅ 데스크탑 기준선 */
+  min-width:0;
+}
+
+/* inline 안 input은 margin-left 제거 */
+.mento-register__field--inline .mento-register__input{
+  margin-left:0;
+}
+
+/* 멘토 줄의 3번째 칸(빈칸) 자리 확보 */
+.mento-register__field--inline::after{
+  content:"";
+  width:36px;
+  height:36px;
+}
+
+/* ===================================================== */
+/* ===== 멘티 다중 입력 ===== */
+/* ===================================================== */
+.menti-stack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  min-width:0;
+}
+
+.menti-line{
+  display:grid;
+  grid-template-columns: 1fr 120px 36px;
+  gap:12px;
+  align-items:center;
+  margin-left:30px;           /* ✅ 데스크탑 기준선 */
+  min-width:0;
+}
+
+.menti-line .mento-register__input{
+  margin-left:0;
+}
+
+/* X 삭제 버튼 (32px 기준으로 맞춤) */
+.menti-remove-x{
+  width:36px;
+  height:36px;               /* X는 36 유지(원래 디자인 유지) */
+  border-radius:10px;
+  border:0;
+  background:#e0e0e0;
+  color:#666;
+  font-size:20px;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:filter .15s ease, transform .05s ease;
+}
+
+.menti-remove-x:hover{ filter:brightness(0.97); }
+.menti-remove-x:active{ transform:translateY(1px); }
+
+.menti-remove-x.is-hidden{
+  visibility:hidden;
+  pointer-events:none;
+}
+
+/* 멘티추가 버튼 (read 32px 규격 + pill 유지) */
+.menti-add-btn{
+  margin-top:12px;
+  margin-left:30px;
+  border-radius:18px;        /* pill 느낌 유지 */
+  background:#b3b3b3;
+  color:#fff;
+  padding:0 14px;            /* pill은 조금 짧게 */
+}
+
+/* ===== actions ===== */
+/* ✅ 전 구간 동일: 항상 오른쪽 고정(이동 없음) */
+.mento-register__actions{
+  display:flex;
+  justify-content:flex-end;
+  gap:12px;
+  margin-top:26px;
+  flex-wrap:wrap;
+}
+
+/* ===== submit buttons 색 ===== */
+.mento-register__btn--primary{
+  background:var(--brand);
+  color:#fff;
+}
+.mento-register__btn--ghost{
+  background:#b3b3b3;
+  color:#fff;
+}
+
+/* ===== update buttons 색 (기존 유지) ===== */
+.mento-update__btn--primary{
+  background:#c98f97;
+  color:#fff;
+}
+.mento-update__btn--ghost{
+  background:#b3b3b3;
+  color:#fff;
+}
+
+/* ===================================================== */
+/* ✅ 반응형 (전 구간 자연스럽게, 정렬은 유지) */
+/* ===================================================== */
+
+/* 태블릿: 기준선 제거 */
+@media (max-width:1024px){
+  .mento-register{
+    padding:22px 18px 34px;
+  }
+
+  .mento-register__row{
+    grid-template-columns:90px 1fr;
+  }
+
+  .mento-register__input{
+    margin-left:0;
+  }
+
+  .mento-register__field--inline,
+  .menti-line{
+    margin-left:0;
+  }
+
+  .menti-add-btn{
+    margin-left:0;
+  }
+}
+
+/* 모바일: 라벨/필드 스택 + 3칸 유지(축소) */
+@media (max-width:720px){
+  .mento-register{
+    padding:20px 16px 32px;
+  }
+
+  .mento-register__row{
+    grid-template-columns:1fr;
+    gap:8px;
+    margin:12px 0;
+  }
+
+  .mento-register__label{
+    padding-top:0;
+  }
+
+  /* 멘토/멘티 라인 기준선 제거 + 컬럼 축소 */
+  .mento-register__field--inline,
+  .menti-line{
+    grid-template-columns: 1fr 96px 32px;
+    gap:10px;
+  }
+
+  .mento-register__field--inline::after{
+    width:32px;
+    height:32px;
+  }
+
+  /* 선택 버튼도 32 유지, 폭만 축소 */
+  .mento-register__id-check-btn{
+    width:96px;
+    padding:0 12px;
+  }
+
+  .menti-remove-x{
+    width:32px;
+    height:32px;
+    border-radius:9px;
+    font-size:18px;
+  }
+
+  .menti-add-btn{
+    margin-left:0;
+  }
+
+  /* ✅ actions는 계속 오른쪽 고정(변경 없음) */
+}
+
+/* 아주 작은 화면: 버튼 패딩만 줄여서 꽉차는 느낌 방지 */
+@media (max-width:420px){
+  .mento-register__btn,
+  .mento-update__btn,
+  .mento-register__id-check-btn{
+    padding:0 14px;
+  }
+}

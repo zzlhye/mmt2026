@@ -1,0 +1,491 @@
+:root{
+  --brand:#6b1d3e;
+
+  --text:#111;
+  --muted:#777;
+  --line:#e9e9ee;
+  --bg:#fff;
+
+  --sidebarW: 220px;
+  --sidebarCollapsedW: 72px;
+  --headerH: 56px;
+
+  --z-overlay: 19999;
+  --z-sidebar: 20000;
+  --z-header: 21000;
+}
+
+*{ box-sizing:border-box; }
+
+html, body{
+  margin:0;
+  padding:0;
+  font-family: -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+  color:var(--text);
+  background:var(--bg);
+
+  overflow-x:hidden;
+  overflow-y:auto;
+
+  min-height:100%;
+  height:100%;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 전체 스크롤바 숨김 */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar{
+  width:0;
+  height:0;
+}
+
+/* ================= Header ================= */
+.topbar{
+  position: sticky;
+  top: 0;
+  z-index: var(--z-header);
+  height: var(--headerH);
+
+  background:#fff;
+
+  /* ✅ 선이 로고에 가려지지 않게 ::after로 */
+  border-bottom:0;
+
+  /* ✅ 화면 정중앙 고정 (좌/우 균형) */
+  display:grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items:center;
+  padding:0 12px;
+
+  /* ✅ 드롭다운이 헤더 밖으로 나가도 안 잘리게 */
+  overflow: visible;
+}
+
+/* ✅ 헤더 선(항상 위에 보이게) */
+.topbar::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:1px;
+  background: var(--line);
+  z-index: 999999;
+  pointer-events:none;
+}
+
+/* 햄버거 (왼쪽) */
+.hamburger{
+  width:44px;
+  height:44px;
+  border:0;
+  background:transparent;
+  color:#111;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  border-radius:10px;
+  transition: background .15s ease, transform .12s ease;
+  z-index: calc(var(--z-header) + 1);
+  justify-self:start;
+
+  /* ✅ transform 튐 방지 (선택) */
+  will-change: transform;
+}
+.hamburger:hover{ background:#f5f5f7; }
+.hamburger:active{ transform:scale(.96); }
+
+/* ===== 로고 중앙 ===== */
+.brand{
+  grid-column: 2;
+  justify-self:center;
+  align-self:center;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  max-width: min(520px, 70vw);
+  overflow:hidden;
+  pointer-events:none;
+}
+
+/* ✅ 이미지+텍스트 정렬 + 간격 */
+.brand-link{
+  display:inline-flex;
+  align-items:center;
+
+  /* 🔥 ‘이미지+ESD 묶음’ ↔ 서브텍스트 */
+  gap:5px;
+
+  text-decoration:none;
+  pointer-events:auto;
+  line-height:1;
+  white-space:nowrap;
+
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  /* ✅ 높이 고정으로 세로 정렬 흔들림 방지 */
+  height: var(--headerH);
+}
+
+/* ✅ 이미지와 ESD를 가깝게 붙이는 묶음 */
+.brand-main-wrap{
+  display:flex;
+  align-items:center;
+
+  /* 🔥 이미지 ↔ ESD */
+  gap:4px;
+}
+
+.brand-main{
+  font-weight:400;
+  font-size:18px;
+  letter-spacing:-0.4px;
+  color:var(--brand);
+}
+
+.brand-sub{
+  font-weight:400;
+  font-size:12px;
+  color:#555;
+  position:relative;
+  top:2px;
+}
+
+/* ✅ 로고 이미지 */
+.brand-logo{
+  height:60px;
+  width:auto;
+  object-fit:contain;
+  flex-shrink:0;
+
+  /* ✅ 로고 PNG 여백 보정 */
+  margin-right:-15px;
+
+  /* ✅ inline 이미지 baseline 여백 제거 */
+  display:block;
+
+  /* ✅ 미세 오차 보정 */
+  position:relative;
+  top:-0.5px;
+}
+
+/* ================= User dropdown (오른쪽) ================= */
+.user-wrap{
+  grid-column: 3;
+  justify-self:end;
+  align-self:center;
+
+  position:relative;
+  display:flex;
+  align-items:center;
+
+  margin-left:0;
+  white-space:nowrap;
+}
+
+.user-btn{
+  height:44px;
+  border:0;
+  background:transparent;
+  cursor:pointer;
+  padding:0 10px;
+  border-radius:10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  font-weight:400;
+  color:#111;
+}
+.user-btn:hover{ background:#f5f5f7; }
+
+.dropdown{
+  position:absolute;
+  right:0;
+  top: calc(100% + 8px);
+  min-width:160px;
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  padding:6px;
+  display:none;
+  z-index: calc(var(--z-header) + 50);
+}
+.user-wrap.open .dropdown{ display:block; }
+
+.dropdown a{
+  display:block;
+  padding:10px;
+  border-radius:10px;
+  font-size:14px;
+  text-decoration:none;
+  color:#111;
+  font-weight:400;
+}
+.dropdown a:hover{ background:#f5f5f7; }
+
+/* ================= Layout ================= */
+.app{
+  display:grid;
+  grid-template-columns: var(--sidebarW) minmax(0, 1fr);
+  min-width:0;
+  transition: grid-template-columns .25s ease;
+
+  min-height: calc(100dvh - var(--headerH));
+  overflow: visible;
+}
+
+.content{
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  min-height: calc(100dvh - var(--headerH));
+  overflow: visible;
+}
+
+footer{ margin-top:auto; }
+
+/* ================= Sidebar ================= */
+.sidebar{
+  background:#f5f5f796;
+  border-right:1px solid var(--line);
+  padding:14px 10px;
+  width: var(--sidebarW);
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+  transition: width .25s ease, transform .25s ease;
+}
+
+.sidebar nav{
+  overflow:auto;
+  min-height:0;
+  padding-right:4px;
+}
+
+.sidebar nav ul{
+  list-style:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.sidebar nav li a{
+  display:flex;
+  align-items:center;
+  gap:10px;
+
+  padding:12px 12px;
+  text-decoration:none;
+
+  font-weight:400;
+  font-size:14px;
+  color:#222;
+
+  border-radius:12px;
+  margin:0;
+
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+
+  transition: background .15s ease, color .15s ease, transform .12s ease;
+}
+
+.sidebar nav li a:hover{
+  background:#f1f2f4;
+  transform: translateY(-1px);
+}
+
+.sidebar nav li a svg{
+  width:18px;
+  height:18px;
+  flex-shrink:0;
+  opacity:.85;
+}
+
+.sidebar nav li a.active{
+  background: rgba(107,29,62,.10);
+  color: var(--brand);
+  position:relative;
+}
+.sidebar nav li a.active::before{
+  content:"";
+  position:absolute;
+  left:0;
+  top:10px;
+  bottom:10px;
+  width:3px;
+  background: var(--brand);
+  border-radius:3px;
+}
+
+/* 데스크탑: 사이드바 sticky */
+@media (min-width: 861px){
+  .sidebar{
+    position: sticky;
+    top: var(--headerH);
+    height: calc(100dvh - var(--headerH));
+  }
+}
+
+/* ================= Collapse ================= */
+body.sb-collapsed .app{
+  grid-template-columns: var(--sidebarCollapsedW) minmax(0, 1fr);
+}
+body.sb-collapsed .sidebar{
+  width: var(--sidebarCollapsedW);
+}
+body.sb-collapsed .sidebar nav li a span{
+  display:none;
+}
+body.sb-collapsed .sidebar nav li a{
+  justify-content:center;
+  padding:12px 0;
+}
+
+/* ================= Overlay ================= */
+.overlay{
+  display:none;
+  position:fixed;
+  inset: var(--headerH) 0 0 0;
+  background:rgba(0,0,0,.35);
+  z-index: var(--z-overlay);
+}
+
+/* ================= Mobile ================= */
+@media (max-width: 860px){
+  /* ✅ 모바일에서 헤더를 fixed로 */
+  .topbar{
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: var(--z-header);
+    overflow: visible;
+
+    /* ✅ 모바일 로고 “세로/가로 중앙” 고정 */
+    display:flex !important;
+    align-items:center;
+    justify-content:center;
+  }
+
+  .sidebar{
+    background:#f5f5f7; /* 불투명 */
+  }
+
+  .brand-link{ transform: translateY(-2px); }
+
+  /* ✅ 햄버거/유저가 로고를 밀지 않게 absolute로 고정 */
+  .hamburger{
+    position:absolute;
+    left:12px;
+    top:50%;
+    transform: translateY(-50%);
+    justify-self:auto;
+  }
+
+  /* ✅ 핵심 수정: active에서 translateY 유지 + scale 적용 */
+  .hamburger:active{
+    transform: translateY(-50%) scale(.96);
+  }
+
+  .user-wrap{
+    position:absolute;
+    right:12px;
+    top:50%;
+    transform: translateY(-50%);
+    justify-self:auto;
+  }
+
+  /* ✅ 헤더가 fixed라 본문 밀어주기 */
+  .app{
+    padding-top: var(--headerH);
+    grid-template-columns: 1fr;
+    min-height: calc(100dvh - var(--headerH));
+  }
+
+  .content{
+    min-height: calc(100dvh - var(--headerH));
+    display:flex;
+    flex-direction:column;
+  }
+
+  /* ✅ 모바일에서는 로고 영역 더 타이트 */
+  .brand{
+    grid-column:auto;
+    max-width: min(320px, 62vw);
+  }
+  .brand-main{ font-size:16px; }
+  .brand-sub{ font-size:11px; }
+
+  /* ✅ 모바일 로고 보정 */
+  .brand-logo{
+    height:24px;
+    margin-right:-2px;
+    top:0;
+  }
+
+  /* ✅ 유저영역 폭 줄이기 */
+  .user-btn .user-name{ display:none; }
+  .user-btn{ padding:0 6px; }
+
+  /* 사이드바 슬라이드 */
+  .sidebar{
+    position:fixed;
+    top: var(--headerH);
+    left:0;
+    height: calc(100dvh - var(--headerH));
+    transform: translateX(-100%);
+    z-index: var(--z-sidebar);
+  }
+
+  body.sb-open .sidebar{ transform: translateX(0); }
+  body.sb-open .overlay{ display:block; }
+
+  body.sb-open{
+    overflow: hidden;
+    touch-action: none;
+  }
+
+  .overlay{
+    inset: var(--headerH) 0 0 0;
+  }
+}
+
+/* ================= Reduced motion ================= */
+@media (prefers-reduced-motion: reduce){
+  .overlay, .sidebar, .hamburger, .app{ transition:none !important; }
+}
+
+/* ================= Scrollbar Hide (영역만) ================= */
+.sidebar nav,
+.dropdown{
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.sidebar nav::-webkit-scrollbar,
+.dropdown::-webkit-scrollbar{
+  width:0;
+  height:0;
+  display:none;
+}
+
+/* ▼ 회전용 */
+.user-btn .chev{
+  display:inline-block;            /* transform 적용 필수 */
+  transition: transform .2s ease;
+}
+
+.user-wrap.open .user-btn .chev{
+  transform: rotate(180deg);
+}
+
+

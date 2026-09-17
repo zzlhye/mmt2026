@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.preTrainingMapper">
+
+	<!-- 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="preNum" resultType="int" order="BEFORE">
+			SELECT SEQ_PRETRAINING.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_PRETRAINING (PRE_NUM, TITLE, CONTENT, CATEGORY, REG_DATE, VIEW_COUNT, USER_ID)
+		VALUES (#{preNum}, #{title}, #{content}, #{category}, SYSDATE, 0, #{userId})
+	</insert>
+
+
+	<!-- 조회 -->
+	<select id="read" resultType="com.mis.domain.PreTrainingVO">
+		SELECT P.PRE_NUM, P.TITLE, P.CONTENT, P.CATEGORY, P.REG_DATE, P.VIEW_COUNT, P.USER_ID
+		FROM TBL_PRETRAINING P
+		WHERE P.PRE_NUM = #{preNum}
+	</select>
+
+
+	<!-- 수정 -->
+	<update id="update">
+		UPDATE TBL_PRETRAINING
+		SET TITLE = #{title}, CONTENT = #{content}, CATEGORY = #{category}
+		WHERE PRE_NUM = #{preNum}
+	</update>
+
+
+	<!-- 삭제 -->
+	<delete id="delete">
+		DELETE FROM TBL_PRETRAINING
+		WHERE PRE_NUM = #{preNum}
+	</delete>
+
+
+	<!-- 조회수 증가 -->
+	<update id="viewCount">
+		UPDATE TBL_PRETRAINING
+		SET VIEW_COUNT = VIEW_COUNT + 1
+		WHERE PRE_NUM = #{preNum}
+	</update>
+
+
+	<!-- 첨부파일 등록 -->
+	<insert id="insertFile">
+		<selectKey keyProperty="fileNum" resultType="int" order="BEFORE">
+			SELECT SEQ_PRETRAINING_FILE.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_PRETRAINING_FILE (FILE_NUM, FILE_NAME, PRE_NUM)
+		VALUES (#{fileNum}, #{fileName}, #{preNum})
+	</insert>
+
+
+	<!-- 게시글 첨부파일 전체 삭제 -->
+	<delete id="deleteFile">
+		DELETE FROM TBL_PRETRAINING_FILE
+		WHERE PRE_NUM = #{preNum}
+	</delete>
+
+
+	<!-- 첨부파일 하나 삭제 -->
+	<delete id="onlyFileDelete">
+		DELETE FROM TBL_PRETRAINING_FILE
+		WHERE FILE_NUM = #{fileNum}
+	</delete>
+
+
+	<!-- 첨부파일 목록 -->
+	<select id="fileList" resultType="com.mis.domain.PreTrainingFileVO">
+		SELECT
+			FILE_NUM, SUBSTR(FILE_NAME, INSTR(FILE_NAME, '_') + 1) AS FILE_NAME, FILE_NAME AS FILES, PRE_NUM
+		FROM TBL_PRETRAINING_FILE
+		WHERE PRE_NUM = #{preNum}
+	</select>
+
+
+	<!-- 검색 조건 -->
+	<sql id="search">
+		<if test="keyword != null and keyword != ''">
+			AND (
+				P.TITLE LIKE '%' || #{keyword} || '%'
+				OR P.CONTENT LIKE '%' || #{keyword} || '%'
+			)
+		</if>
+	</sql>
+
+
+	<!-- 검색 + 페이징 목록 -->
+	<select id="listSearch" resultType="com.mis.domain.PreTrainingVO">
+		<![CDATA[
+			SELECT *
+			FROM (
+				SELECT ROWNUM AS RNUM, A.*
+				FROM (
+					SELECT P.PRE_NUM, P.TITLE, P.CONTENT, P.CATEGORY, P.REG_DATE, P.VIEW_COUNT, P.USER_ID
+					FROM TBL_PRETRAINING P
+					WHERE P.PRE_NUM > 0
+		]]>
+
+		<include refid="search" />
+
+		<![CDATA[
+					ORDER BY P.PRE_NUM DESC
+				) A
+				WHERE ROWNUM <= #{pageEnd}
+			)
+			WHERE RNUM >= #{pageStart}
+			ORDER BY PRE_NUM DESC
+		]]>
+	</select>
+
+
+	<!-- 검색 결과 개수 -->
+	<select id="listSearchCount" resultType="int">
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM TBL_PRETRAINING P
+			WHERE P.PRE_NUM > 0
+		]]>
+
+		<include refid="search" />
+	</select>
+
+</mapper>

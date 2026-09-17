@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.MentoringRelateMapper">
+
+	<!-- 현재 사용자가 선택한 반응 타입 조회 -->
+	<select id="getType" parameterType="map" resultType="string">
+		SELECT RELATE_TYPE
+		FROM (
+			SELECT RELATE_TYPE
+			FROM TBL_MENTORING_RELATE
+			WHERE MENTORING_NUM = #{mentoringNum} AND USER_ID = #{userId}
+			ORDER BY REG_DATE DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+
+	<!-- 반응 추가 -->
+	<insert id="create" parameterType="map">
+		INSERT INTO TBL_MENTORING_RELATE (RELATE_NUM, MENTORING_NUM, USER_ID, RELATE_TYPE, REG_DATE)
+		VALUES (SEQ_MENTORING_RELATE.NEXTVAL, #{mentoringNum}, #{userId}, #{relateType}, SYSDATE)
+	</insert>
+
+
+	<!-- 사용자의 반응 삭제 -->
+	<delete id="delete" parameterType="map">
+		DELETE FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{mentoringNum} AND USER_ID = #{userId}
+	</delete>
+
+
+	<!-- 해당 게시글의 모든 반응 삭제 -->
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value}
+	</delete>
+
+
+	<!-- 전체 반응 수 -->
+	<select id="countAll" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value}
+	</select>
+
+
+	<!-- 1번 반응 수 -->
+	<select id="countEmo1" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 1
+	</select>
+
+
+	<!-- 2번 반응 수 -->
+	<select id="countEmo2" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 2
+	</select>
+
+
+	<!-- 3번 반응 수 -->
+	<select id="countEmo3" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 3
+	</select>
+
+
+	<!-- 4번 반응 수 -->
+	<select id="countEmo4" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 4
+	</select>
+
+
+	<!-- 5번 반응 수 -->
+	<select id="countEmo5" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 5
+	</select>
+
+
+	<!-- 6번 반응 수 -->
+	<select id="countEmo6" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 6
+	</select>
+
+
+	<!-- 7번 반응 수 -->
+	<select id="countEmo7" parameterType="int" resultType="int">
+		SELECT COUNT(*)
+		FROM TBL_MENTORING_RELATE
+		WHERE MENTORING_NUM = #{value} AND RELATE_TYPE = 7
+	</select>
+
+</mapper>

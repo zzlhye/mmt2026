@@ -1,0 +1,263 @@
+/* ===== 관리자용 - 멘토, 멘티 목록 ===== */
+main.mento-main{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.mento-wrap{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ✅ 타이틀(term-btn 톤) */
+.mento-title{
+  margin: 10px 0 20px;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#8b0029;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* toolbar */
+.mento-toolbar{
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:10px;
+  margin: 0 0 14px;
+  flex-wrap:wrap;
+}
+.mento-search{
+  position:relative;
+  min-width: 260px;
+  flex: 0 1 360px;
+}
+.mento-search input{
+  width:100%;
+  height:40px;
+  padding: 0 12px 0 38px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  outline:none;
+  background:#f5f5f796;
+}
+.mento-search input:focus{
+  border-color: color-mix(in srgb, var(--brand) 55%, #fff);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 16%, transparent);
+}
+.mento-search-icon{
+  position:absolute;
+  left:12px;
+  top:50%;
+  transform:translateY(-50%);
+  width:18px;
+  height:18px;
+  opacity:.55;
+  color:#111;
+}
+.mento-btn{
+  height:40px;
+  padding:0 16px;
+  border:0;
+  border-radius:10px;
+  background:var(--brand);
+  color:#fff;
+  font-weight:400;
+  cursor:pointer;
+}
+.mento-btn:hover{ filter:brightness(1.03); }
+.mento-btn:active{ transform: translateY(1px); }
+.mento-btn:focus-visible{
+  outline:2px solid color-mix(in srgb, var(--brand) 40%, #fff);
+  outline-offset:2px;
+}
+
+/* table */
+.mento-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing: 0 10px;
+
+  /* ✅ 추가(핵심): 컬럼 width가 제대로 먹게 강제 */
+  table-layout: fixed;
+}
+.mento-table thead th{
+  text-align:left;
+  font-size:13px;
+  color:var(--muted);
+  font-weight:400;
+  padding: 0 12px 6px;
+}
+.mento-table tbody tr{
+  background:#f5f5f796;
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.mento-table tbody tr:hover{
+  transform:translateY(-3px);
+  box-shadow:0 10px 20px rgba(0,0,0,.10);
+}
+.mento-table tbody td{
+  padding: 12px 12px;
+  font-size:14px;
+  vertical-align:middle;
+}
+.mento-table tbody td:first-child{
+  border-top-left-radius:12px;
+  border-bottom-left-radius:12px;
+  font-weight:400;
+  color:#111;
+}
+.mento-table tbody td:last-child{
+  border-top-right-radius:12px;
+  border-bottom-right-radius:12px;
+}
+
+.col-no{ width:84px; }
+.col-date{ width:150px; font-variant-numeric: tabular-nums; }
+
+/* ✅ 생년월일(col-views) 넓히기 + 줄바꿈 방지 */
+.col-views{
+  width:140px;                 /* 기존 90px -> 140px */
+  text-align:left;             /* 날짜는 left가 더 자연스러움 */
+  font-variant-numeric: tabular-nums;
+
+  /* ✅ 추가(핵심): 2003- / 02-01로 깨지는 줄바꿈 방지 */
+  white-space: nowrap;
+  word-break: keep-all;
+}
+
+/* ✅ 오른쪽 패딩 과다 제거 */
+.mento-table tbody td.col-views{
+  padding-right:12px;          /* 기존 58px -> 12px */
+  white-space: nowrap;         /* 안전장치 */
+}
+
+.col-title{
+  font-weight:400;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  max-width: 1px;
+}
+
+/* pager */
+.mento-pager{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:8px;
+  margin: 18px 0 0;
+  flex-wrap:wrap;
+}
+.pager-page,
+.pager-chev{
+  height:34px;
+  min-width:34px;
+  padding:0 10px;
+  border-radius:10px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:#333;
+  cursor:pointer;
+  user-select:none;
+  font-weight:400;
+}
+.pager-chev{
+  border:0;
+  background:transparent;
+  color:#666;
+}
+.pager-page:hover{ background:#fafafa; }
+.pager-chev:hover{ background:#f3f3f3; }
+.pager-page.is-active{
+  background:var(--brand);
+  color:#fff;
+  border-color: transparent;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px){
+  main.mento-main{ padding:20px 16px 32px; }
+}
+
+/* ✅ 모바일 카드 간격/여백 개선 */
+@media (max-width: 720px){
+  .mento-table thead{ display:none; }
+  .mento-table,
+  .mento-table tbody,
+  .mento-table tr,
+  .mento-table td{
+    display:block;
+    width:100%;
+  }
+
+  .mento-table{ border-spacing: 0 18px; }
+
+  .mento-table tbody tr{
+    border-radius:14px;
+    overflow:hidden;
+    margin-bottom:18px;
+  }
+
+  .mento-table tbody td{
+    padding: 12px 14px;
+  }
+
+  .col-title{
+    white-space:normal;
+    max-width:none;
+    line-height:1.35;
+  }
+
+  .mento-table tbody td.col-date,
+  .mento-table tbody td.col-views{
+    display:inline-block;
+    width:auto;
+    color:var(--muted);
+    font-size:13px;
+    padding-top:0;
+  }
+  .mento-table tbody td.col-views{
+    text-align:left;
+    margin-left:10px;
+    padding-right:0;
+    white-space: nowrap;
+  }
+
+  .mento-table tbody td.col-date::before{
+    content:"날짜: ";
+    color:#999;
+    font-weight:400;
+  }
+  .mento-table tbody td.col-views::before{
+    content:"조회수: ";
+    color:#999;
+    font-weight:400;
+  }
+
+  .mento-pager{ margin-top: 26px; }
+}
+
+/* ===== 🔥 a 링크 티 제거 ===== */
+.mento-table td.col-title > a,
+.mento-table td.col-title > a:visited,
+.mento-table td.col-title > a:hover,
+.mento-table td.col-title > a:active{
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.mento-table td.col-title > a{
+  display: block;
+}

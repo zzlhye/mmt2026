@@ -1,0 +1,609 @@
+/* =========================
+   멘토링 목록
+   ========================= */
+
+
+/* =========================
+   메인
+   ========================= */
+
+main.mentoring-main {
+  padding: 24px 24px 40px;
+  background: #fff;
+  min-width: 0;
+}
+
+.mentoring-wrap {
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-width: 0;
+}
+
+
+/* =========================
+   상단
+   ========================= */
+
+.mentoring-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.mentoring-title {
+  margin: 10px 0 20px;
+  padding: 0;
+  color: #8b0029;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: -0.2px;
+  line-height: 1.2;
+}
+
+
+/* 주차 등록 버튼 */
+
+.week-add-btn {
+  padding: 4px 8px;
+  border: 1px solid #e3e3e3;
+  border-radius: 6px;
+  background: #f1f1f1;
+  color: #555;
+  font-size: 11px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.week-add-btn:hover {
+  filter: brightness(.98);
+}
+
+
+/* =========================
+   팀 소개
+   ========================= */
+
+.m-card {
+  margin: 10px 0 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: #f5f5f796;
+}
+
+.m-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.m-card-title {
+  color: #222;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.m-card-body {
+  padding-top: 2px;
+}
+
+.m-desc {
+  margin: 0 0 8px;
+  color: #666;
+  font-size: 11.5px;
+  line-height: 1.55;
+  white-space: pre-line;
+}
+
+
+/* 팀 소개 수정 아이콘 */
+
+.edit-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: #c05d69;
+  cursor: pointer;
+}
+
+.edit-icon:hover {
+  background: rgba(0, 0, 0, .05);
+}
+
+
+/* 팀 소개 수정 */
+
+.team-view {
+  display: block;
+}
+
+.team-edit {
+  display: none;
+}
+
+#teamCard.is-editing .team-view {
+  display: none;
+}
+
+#teamCard.is-editing .team-edit {
+  display: block;
+}
+
+#teamCard.is-editing .edit-icon {
+  background: rgba(0, 0, 0, .06);
+}
+
+.m-textarea {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background: #fff;
+  font-family: inherit;
+  font-size: 12px;
+  line-height: 1.5;
+  outline: none;
+  resize: vertical;
+}
+
+.m-textarea:focus {
+  border-color: rgba(139, 0, 41, .35);
+}
+
+.team-edit-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.btn-save,
+.btn-cancel {
+  padding: 8px 12px;
+  border: 0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #8b0029;
+  color: #fff;
+}
+
+.btn-save:hover {
+  filter: brightness(.98);
+}
+
+.btn-cancel {
+  background: #e7e7e7;
+  color: #333;
+}
+
+.btn-cancel:hover {
+  filter: brightness(.98);
+}
+
+
+/* =========================
+   멘토 / 멘티 소개
+   ========================= */
+
+.m-acc {
+  margin: 12px 0;
+}
+
+.m-acc-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #f5f5f796;
+  color: #222;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.m-acc-head:hover {
+  filter: brightness(.99);
+}
+
+.m-acc-caret,
+.week-caret {
+  color: #333;
+  font-size: 12px;
+  line-height: 1;
+  user-select: none;
+}
+
+.m-acc-body {
+  display: none;
+  margin-top: 10px;
+}
+
+.m-acc-body.open {
+  display: block;
+}
+
+.m-people-box {
+  padding: 12px 14px;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background: #f5f5f796;
+}
+
+.m-people-item {
+  padding: 4px 0;
+  color: #444;
+  font-size: 11.5px;
+}
+
+.m-people-item strong {
+  font-weight: 400;
+}
+
+
+/* =========================
+   주차 선택
+   전체 / 1 / 2 / 3 ...
+   ========================= */
+
+.week-dots {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 40px 0 20px;
+}
+
+.w-dot {
+  appearance: none;
+  -webkit-appearance: none;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 30px;
+  height: 30px;
+  padding: 0 15px;
+
+  border: 0;
+  border-radius: 999px;
+
+  background: #f5f5f796;
+  color: #777;
+
+  font-family: inherit;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.w-dot:hover {
+  filter: brightness(.97);
+}
+
+.w-dot:focus-visible {
+  outline: 2px solid rgba(139, 0, 41, .25);
+  outline-offset: 2px;
+}
+
+.w-dot-active {
+  background: #8b0029;
+  color: #fff;
+}
+
+.w-dot-active:hover {
+  background: #8b0029;
+}
+
+
+/* =========================
+   주차
+   ========================= */
+
+.week-card {
+  margin: 10px 0 18px;
+}
+
+.week-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+
+  padding: 10px 12px;
+  border-radius: 10px;
+
+  background: #f5f5f796;
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.week-head:hover {
+  filter: brightness(.99);
+}
+
+.week-title {
+  min-width: 0;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+
+  color: #222;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: -0.1px;
+}
+
+.week-actions {
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.week-btn {
+  padding: 4px 8px;
+  border: 1px solid #e3e3e3;
+  border-radius: 6px;
+  background: #f1f1f1;
+  color: #555;
+  font-size: 11px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+.week-btn:hover {
+  filter: brightness(.98);
+}
+
+.week-body {
+  display: none;
+  margin-top: 12px;
+}
+
+.week-body.open {
+  display: block;
+}
+
+.week-frame {
+  padding: 12px 14px;
+  border: 1px solid #e2e2e2;
+  border-radius: 10px;
+  background: #fff;
+}
+
+
+/* =========================
+   멘토링 게시글 그리드
+   ========================= */
+
+.img-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.img-cell {
+  position: relative;
+
+  display: block;
+  overflow: hidden;
+
+  aspect-ratio: 1 / 1;
+
+  border-radius: 18px;
+  background: #dcdcdc;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.img-cell img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* =========================
+   게시글 Hover
+   ========================= */
+
+.img-overlay {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, .55);
+  backdrop-filter: blur(1px);
+
+  opacity: 0;
+  transform: translateY(6px);
+
+  transition:
+    opacity .18s ease,
+    transform .18s ease;
+
+  pointer-events: none;
+}
+
+.img-cell:hover .img-overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.img-ov-title {
+  padding: 0 10px;
+
+  color: #111;
+
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.img-ov-meta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+
+  color: #111;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.meta-icon {
+  display: block;
+
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+
+  overflow: visible;
+}
+
+.meta-icon.heart {
+  color: #ff4d6d;
+}
+
+.meta-icon.chat {
+  color: #777;
+}
+
+.meta-count {
+  color: #111;
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.img-cell:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, .35);
+  outline-offset: 2px;
+}
+
+
+/* =========================
+   빈 목록
+   ========================= */
+
+.empty-week {
+  padding: 14px 4px;
+  color: #888;
+  font-size: 11.5px;
+}
+
+.empty-msg {
+  font-size: 14px;
+}
+
+
+/* =========================
+   태블릿
+   ========================= */
+
+@media (max-width: 768px) {
+
+  main.mentoring-main {
+    padding: 20px 16px 32px;
+  }
+
+  .mentoring-wrap {
+    max-width: 100%;
+  }
+
+  .img-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .img-ov-title {
+    font-size: 14px;
+  }
+
+  .meta-count {
+    font-size: 14px;
+  }
+}
+
+
+/* =========================
+   모바일
+   ========================= */
+
+@media (max-width: 480px) {
+
+  main.mentoring-main {
+    padding: 18px 12px 28px;
+  }
+
+  .mentoring-title {
+    font-size: 20px;
+  }
+
+  .week-dots {
+    margin-top: 30px;
+  }
+
+  .w-dot {
+    height: 28px;
+    min-width: 28px;
+    padding: 0 12px;
+    font-size: 12px;
+  }
+
+  .img-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .week-head {
+    gap: 6px;
+  }
+
+  .week-actions {
+    gap: 4px;
+  }
+
+  .week-btn {
+    padding: 4px 6px;
+    font-size: 10px;
+  }
+}

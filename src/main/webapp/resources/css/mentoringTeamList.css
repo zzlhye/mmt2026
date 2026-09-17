@@ -1,0 +1,188 @@
+/* 관리자용 - 멘토링 팀 전체 목록 화면 */
+/* ✅ 패트릿 규격 main/wrap 구조를 mentoring에 적용 */
+
+main.patrit-main{
+  padding:24px 24px 40px;
+  background:#fff;
+  min-width:0;
+}
+
+.patrit-wrap{
+  width:100%;
+  max-width:1000px;
+  margin:0 auto;
+  min-width:0;
+}
+
+/* ====== 제목(패트릿 규격) ====== */
+.patrit-title{
+  margin:10px 0 20px;
+  border:0;
+  padding:0;
+  background:transparent;
+  color:#8b0029;
+  font-size:22px;
+  font-weight:400;
+  letter-spacing:-0.2px;
+  line-height:1.2;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* ====== toolbar(패트릿 규격) ====== */
+.patrit-toolbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin:9px 0 25px;
+  flex-wrap:wrap;
+}
+
+/* ====== 드롭다운(패트릿 규격) ====== */
+.patrit-dropdown{
+  position:relative;
+  display:inline-block;
+  z-index:60;
+}
+
+.patrit-term-btn{
+  border:0;
+  background:transparent;
+  color:#c56b73;
+  font-size:18px;
+  font-weight:400;
+  cursor:pointer;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  padding:0;
+}
+
+.patrit-arrow{
+  display:inline-block;
+  transition: transform .15s ease;
+}
+
+.patrit-dropdown.open .patrit-arrow{
+  transform: rotate(180deg);
+}
+
+.patrit-menu{
+  position:absolute;
+  top: calc(100% + 10px);
+  left: -10px;
+  background:#fff;
+  border:1px solid #eee;
+  border-radius:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.14);
+  padding:6px;
+  list-style:none;
+  margin:0;
+  display:none;
+  min-width:200px;
+  z-index:9999;
+}
+
+.patrit-dropdown.open .patrit-menu{ display:block; }
+
+.patrit-menu li{
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:400;
+  color:#111;
+  user-select:none;
+  outline:none;
+}
+
+.patrit-menu li:hover,
+.patrit-menu li:focus{
+  background:#f5f5f5;
+}
+
+.patrit-menu li[aria-selected="true"]{
+  background: color-mix(in srgb, var(--brand) 10%, #fff);
+}
+
+/* ====== 멘토링 팀 카드/그리드 ====== */
+.card-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap:24px;
+  width:100%;
+}
+
+/* ====== 카드(이미지 배경 + 텍스트 오버레이) ====== */
+.activity-card{
+  height:200px;
+  border-radius:16px;
+  overflow:hidden;
+  position:relative;  /* ✅ 오버레이 핵심 */
+  box-shadow:0 8px 18px rgba(0,0,0,.1);
+  cursor:pointer;
+  transition: transform .15s ease, box-shadow .15s ease;
+  min-width:0;
+  text-decoration:none;
+  color:#fff;         /* 글자 흰색 */
+  background:transparent;s
+}
+
+.activity-card:hover{
+  transform:translateY(-4px);
+  box-shadow:0 14px 26px rgba(0,0,0,.14);
+}
+
+/* ✅ 카드 배경 이미지: 카드 전체를 꽉 채움 */
+.card-image{
+   position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+/* ✅ 텍스트 가독성용: 아래쪽 그라데이션 오버레이 */
+.activity-card::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.65) 0%,
+    rgba(0,0,0,0.25) 40%,
+    rgba(0,0,0,0.00) 70%
+  );
+  z-index:2;
+}
+
+/* ✅ 팀명: 이미지 위에 올라오게 */
+.card-title{
+  position:absolute;
+  left:16px;
+  right:16px;
+  bottom:14px;
+  z-index:3;              /* ✅ 이미지/그라데이션 위 */
+  font-size:20px;
+  font-weight:400;
+  max-width:100%;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  text-shadow:0 2px 8px rgba(0,0,0,.45);
+}
+
+/* 비어있을 때 */
+.empty-msg{
+  margin:8px 0 0;
+  color:#666;
+  font-weight:400;
+}
+
+/* ===== Responsive: 패트릿 규격과 동일 ===== */
+@media (max-width: 768px){
+  main.patrit-main{ padding:20px 16px 32px; }
+  .patrit-toolbar{ align-items:flex-start; }
+}

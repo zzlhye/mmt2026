@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.MentoringComtMapper">
+
+	<!-- 댓글 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="comtNum" resultType="int" order="BEFORE">
+			SELECT SEQ_MENTORING_COMT.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_MENTORING_COMT (COMT_NUM, CONTENT, REG_DATE, MENTORING_NUM, USER_ID
+		)
+		VALUES (#{comtNum}, #{content}, SYSDATE, #{mentoringNum}, #{userId}
+		)
+	</insert>
+
+	<!-- 댓글 목록 -->
+	<select id="list" parameterType="int" resultType="com.mis.domain.MentoringComtVO"> 
+		SELECT C.COMT_NUM AS comtNum, C.CONTENT AS content, C.REG_DATE AS regDate, C.MENTORING_NUM AS mentoringNum, U.USER_ID AS userId, U.NAME AS name
+		FROM TBL_MENTORING_COMT C JOIN TBL_USER U ON C.USER_ID = U.USER_ID
+		WHERE C.MENTORING_NUM = #{value}
+		ORDER BY C.COMT_NUM DESC
+	</select>
+
+	<!-- 댓글 개별 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_MENTORING_COMT
+		WHERE COMT_NUM = #{value}
+	</delete>
+
+	<!-- 게시글의 댓글 전체 삭제 -->
+	<delete id="deleteAll" parameterType="int">
+		DELETE FROM TBL_MENTORING_COMT
+		WHERE MENTORING_NUM = #{value}
+	</delete>
+
+	<!-- 사용자가 작성한 댓글 전체 삭제 -->
+	<delete id="deleteUser" parameterType="string">
+		DELETE FROM TBL_MENTORING_COMT
+		WHERE USER_ID = #{value}
+	</delete>
+
+</mapper>

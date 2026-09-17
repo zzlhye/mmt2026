@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.patritMapper">
+
+	<!-- 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="patritNum" resultType="int" order="BEFORE">
+			SELECT SEQ_PATRIT.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_PATRIT (PATRIT_NUM, CONTENT, REG_DATE, TEAM_NUM, USER_ID)
+		VALUES (#{patritNum}, #{content}, SYSDATE, #{teamNum}, #{userId})
+	</insert>
+
+	<!-- 조회 -->
+	<select id="read" parameterType="int" resultType="com.mis.domain.PatritVO">
+
+		SELECT P.PATRIT_NUM, P.CONTENT, P.REG_DATE, P.TEAM_NUM, U.USER_ID,
+			CASE
+				WHEN U.NAME IS NULL THEN NULL
+				WHEN LENGTH(U.NAME) = 1 THEN U.NAME
+				WHEN LENGTH(U.NAME) = 2 THEN SUBSTR(U.NAME, 1, 1) || 'O'
+				ELSE SUBSTR(U.NAME, 1, 1) || RPAD('O', LENGTH(U.NAME) - 1, 'O')
+			END AS NAME, U.AUTHORITY
+		FROM TBL_PATRIT P JOIN TBL_USER U ON P.USER_ID = U.USER_ID
+		WHERE P.PATRIT_NUM = #{value}
+	</select>
+
+	<!-- 수정 -->
+	<update id="update">
+		UPDATE TBL_PATRIT
+		SET CONTENT = #{content}
+		WHERE PATRIT_NUM = #{patritNum}
+	</update>
+
+	<!-- 삭제 -->
+	<delete id="delete" parameterType="int">
+		DELETE FROM TBL_PATRIT
+		WHERE PATRIT_NUM = #{value}
+	</delete>
+
+	<!-- 팀 삭제 시 해당 팀 게시글 삭제 -->
+	<delete id="deleteTeam" parameterType="int">
+		DELETE FROM TBL_PATRIT
+		WHERE TEAM_NUM = #{value}
+	</delete>
+
+	<!-- 최신 연도/학기 -->
+	<select id="selectLatestYearTerm" resultType="com.mis.dto.YearTermDTO">
+
+		SELECT YEAR, TERM
+		FROM (
+			SELECT YEAR, TERM
+			FROM TBL_TEAM
+			ORDER BY TO_NUMBER(YEAR) DESC, TO_NUMBER(TERM) DESC
+		)
+		WHERE ROWNUM = 1
+	</select>
+
+	<!-- 연도/학기 목록 -->
+	<select id="selectYearTermList" resultType="com.mis.dto.YearTermDTO">
+
+		SELECT DISTINCT YEAR, TERM
+		FROM TBL_TEAM
+		ORDER BY TO_NUMBER(YEAR) DESC, TO_NUMBER(TERM) DESC
+	</select>
+
+	<!-- 연도/학기별 게시글 수 -->
+	<select id="countPatritByYearTermMembers" parameterType="map" resultType="int">
+
+		<![CDATA[
+			SELECT COUNT(*)
+			FROM TBL_TEAM T JOIN TBL_TEAM_MEMBER TM ON TM.TEAM_NUM = T.TEAM_NUM
+			JOIN TBL_PATRIT P ON P.TEAM_NUM = TM.TEAM_NUM AND P.USER_ID = TM.USER_ID
+			WHERE T.YEAR = #{year} AND T.TERM = #{term}
+		]]>
+	</select>
+
+	<!-- 연도/학기별 게시글 목록 -->
+	<select id="selectPatritByYearTermMembersPaging" parameterType="map" resultType="com.mis.domain.PatritVO">
+
+		<![CDATA[
+			SELECT *
+			FROM (
+				SELECT ROWNUM AS RNUM, A.*
+				FROM (
+					SELECT P.PATRIT_NUM, P.CONTENT, P.REG_DATE, P.TEAM_NUM, U.USER_ID,
+						CASE
+							WHEN U.NAME IS NULL THEN NULL
+							WHEN LENGTH(U.NAME) = 1 THEN U.NAME
+							WHEN LENGTH(U.NAME) = 2 THEN SUBSTR(U.NAME, 1, 1) || 'O'
+							ELSE SUBSTR(U.NAME, 1, 1) || RPAD('O', LENGTH(U.NAME) - 1, 'O')
+						END AS NAME, U.AUTHORITY
+					FROM TBL_TEAM T JOIN TBL_TEAM_MEMBER TM ON TM.TEAM_NUM = T.TEAM_NUM
+					JOIN TBL_PATRIT P ON P.TEAM_NUM = TM.TEAM_NUM AND P.USER_ID = TM.USER_ID
+					JOIN TBL_USER U ON U.USER_ID = P.USER_ID
+					WHERE T.YEAR = #{year} AND T.TERM = #{term}
+					ORDER BY P.PATRIT_NUM DESC
+				) A
+				WHERE ROWNUM <= #{pageEnd}
+			)
+			WHERE RNUM >= #{pageStart}
+			ORDER BY PATRIT_NUM DESC
+		]]>
+	</select>
+
+	<!-- 로그인 사용자의 최신 팀 정보 -->
+	<select id="selectMyTeamInfo" parameterType="string" resultType="com.mis.domain.PatritVO">
+
+		<![CDATA[
+			SELECT *
+			FROM (
+				SELECT T.TEAM_NUM AS teamNum, T.TEAM_NAME AS teamName, T.YEAR AS year, T.TERM AS term,
+					U.USER_ID AS userId, U.AUTHORITY AS authority
+				FROM TBL_USER U
+				JOIN TBL_TEAM_MEMBER TM ON TM.USER_ID = U.USER_ID
+				JOIN TBL_TEAM T ON T.TEAM_NUM = TM.TEAM_NUM
+				WHERE U.USER_ID = #{value}
+				ORDER BY TO_NUMBER(T.YEAR) DESC, TO_NUMBER(T.TERM) DESC
+			)
+			WHERE ROWNUM = 1
+		]]>
+	</select>
+	
+	<!-- 사용자의 해당 연도/학기 후기 작성 여부 -->
+	<select id="countMyPatritByYearTerm" parameterType="map" resultType="int"> 
+		SELECT COUNT(*)
+		FROM TBL_PATRIT P JOIN TBL_TEAM T ON P.TEAM_NUM = T.TEAM_NUM
+		WHERE P.USER_ID = #{userId} AND T.YEAR = #{year} AND T.TERM = #{term} 
+	</select>
+
+</mapper>

@@ -1,0 +1,1000 @@
+/* ===== 멘토링 상세 ===== */
+
+.mentoring-read {
+  padding: 24px 24px 40px;
+  background: #fff;
+  min-width: 0;
+}
+
+.mentoring-read__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  min-width: 0;
+  width: 100%;
+}
+
+
+/* 제목 */
+.mentoring-read__title {
+  width: 100%;
+  max-width: 920px;
+  margin: 10px 0 1px;
+
+  font-size: 15px;
+  font-weight: 400;
+  color: #6b1d3e;
+}
+
+
+/* 카드 */
+.mentoring-read__card {
+  width: 100%;
+  max-width: 920px;
+  min-width: 0;
+  margin: 0;
+
+  display: block;
+}
+
+
+/* 공통 영역 */
+.mentoring-read__headline,
+.mentoring-read__rule,
+.mentoring-read__bottom-rule,
+.mentoring-read__files-rule,
+.mentoring-read__body,
+.mentoring-read__files,
+.mentoring-read__gallery,
+.mentoring-read__footerbar,
+.mentoring-read__commentbox,
+.mentoring-read__comments,
+.mentoring-read__socialbar,
+.mentoring-read__social-rule {
+  width: 100%;
+  max-width: 920px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
+/* 제목 라인 */
+.mentoring-read__headline {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  position: relative;
+}
+
+.mentoring-read__subject {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 400;
+  color: #111;
+  letter-spacing: -0.2px;
+}
+
+
+/* 헤드라인 오른쪽 */
+.mentoring-read__headline-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mentoring-read__meta {
+  display: flex;
+  gap: 8px;
+  font-size: 13px;
+  color: #777;
+  white-space: nowrap;
+  align-items: center;
+}
+
+.mentoring-read__writer {
+  font-weight: 400;
+  color: #444;
+  margin-right: 6px;
+}
+
+.mentoring-read__meta-label {
+  color: #999;
+  font-weight: 400;
+}
+
+
+/* 구분선 */
+.mentoring-read__rule {
+  height: 1px;
+  background: #e6e6e6;
+  margin: 10px 0 18px;
+}
+
+.mentoring-read__bottom-rule {
+  height: 0.2px;
+  background: #e6e6e6;
+  margin: 5px 0 14px;
+}
+
+.mentoring-read__files-rule {
+  height: 0.2px;
+  background: #e6e6e6;
+  margin: 18px 0 14px;
+}
+
+
+/* ===== 본문 ===== */
+
+.mentoring-read__body {
+  font-size: 13.5px;
+  line-height: 1.85;
+  color: #222;
+}
+
+.mentoring-read__body p {
+  margin: 0 0 45px;
+}
+
+
+/* ===== 파일 영역 ===== */
+
+.mentoring-read__files {
+}
+
+
+/* ===== uploadedList ===== */
+
+.uploadedList {
+  padding: 0;
+  margin-top: 12px;
+}
+
+.uploadedList li {
+  list-style: none;
+  margin: 6px 0;
+}
+
+.uploadedList .card {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+  border-radius: 0 !important;
+}
+
+.uploadedList .card .p-2 {
+  padding: 0 !important;
+}
+
+.uploadedList .row {
+  display: flex !important;
+  align-items: center;
+  gap: 8px;
+  margin: 0 !important;
+  width: 100% !important;
+}
+
+.uploadedList .col.pl-0 {
+  flex: 1 1 100% !important;
+  min-width: 0 !important;
+  padding: 0 !important;
+}
+
+.uploadedList .col.pl-0 a {
+  display: block;
+  font-size: 14px;
+  font-weight: 400;
+  color: #222;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-decoration: none;
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.uploadedList .col.pl-0 a:hover {
+  text-decoration: none;
+  color: #8b0029;
+}
+
+
+/* ===== 글 케밥 메뉴 ===== */
+
+.mentoring-read__kebab {
+  border: 0;
+  background: transparent;
+  font-size: 18px;
+  line-height: 1;
+  cursor: pointer;
+  color: #777;
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.mentoring-read__kebab:hover {
+  background: #f2f2f2;
+}
+
+.mentoring-read__kebab-menu {
+  position: absolute;
+  top: 34px;
+  right: 0;
+
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+
+  padding: 8px;
+  display: none;
+  min-width: 110px;
+  z-index: 10;
+}
+
+.mentoring-read__kebab-menu.is-open {
+  display: block;
+}
+
+.mentoring-read__kebab-item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 10px;
+  font-weight: 400;
+  color: #333;
+  text-align: left;
+}
+
+.mentoring-read__kebab-item:hover {
+  background: #f4f4f4;
+}
+
+.mentoring-read__kebab-item--danger {
+  color: #8b0029;
+}
+
+
+/* ===== 이미지 캐러셀 ===== */
+
+.mentoring-read__gallery {
+  margin: 14px 0 30px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mentoring-read__nav {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  border: 0;
+  background: #fff;
+  color: #8b0029;
+  font-weight: 400;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.mentoring-read__gallery-track {
+  flex: 1 1 auto;
+  overflow: hidden;
+  display: flex;
+  gap: 18px;
+  height: 300px;
+  scroll-behavior: smooth;
+}
+
+.mentoring-read__slide {
+  flex: 0 0 calc(50% - 9px);
+  height: 100%;
+  border-radius: 16px;
+  background: #e9e9e9;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+}
+
+.mentoring-read__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+/* ===== 목록 ===== */
+
+.mentoring-read__listbar {
+  margin-top: 12px;
+  display: flex;
+  justify-content: center;
+}
+
+.mentoring-read__listbtn {
+  height: 32px;
+  padding: 0 20px;
+  border-radius: 10px;
+  border: 0;
+  background: #8b0029;
+  color: #fff;
+  font-weight: 400;
+  cursor: pointer;
+}
+
+
+/* ===== footerbar ===== */
+
+.mentoring-read__footerbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+
+  margin-top: 14px;
+  padding-top: 10px;
+
+  border-top: 1px solid #e6e6e6;
+}
+
+
+/* ===== 반응 / 댓글 수 ===== */
+
+.mentoring-read__socialbar {
+  margin-top: 14px;
+}
+
+.mentoring-read__social {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px 2px 12px;
+}
+
+.meta-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #111;
+  font-size: 14px;
+}
+
+.meta-item--btn {
+  border: 0;
+  background: transparent;
+  padding: 4px 6px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.meta-item--btn:hover {
+  background: #f4f4f4;
+}
+
+#reactionTrigger.meta-item--btn:hover {
+  background: transparent !important;
+}
+
+#reactionTrigger .meta-count,
+#reactionTrigger #reactionTotal {
+  background: transparent !important;
+  color: #222 !important;
+}
+
+#reactionTrigger:hover .reaction-empty,
+#reactionTrigger:hover .reaction-selected {
+  background: #e9e9e9;
+}
+
+.meta-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  color: #c0c0c0;
+}
+
+.meta-icon.heart {
+  color: #ff4d6d;
+}
+
+.meta-count {
+  font-weight: 400;
+  color: #222;
+}
+
+.mentoring-read__social-rule {
+  height: 1px;
+  background: #e8e8e8;
+}
+
+
+/* ===== 댓글 입력 ===== */
+
+.mentoring-read__commentbox--photo {
+  margin-top: 14px;
+  position: relative;
+  display: block;
+}
+
+.mentoring-read__commentinput--photo {
+  width: 100%;
+  min-height: 120px;
+  resize: none;
+
+  border: none;
+  outline: none;
+
+  background: #f3f3f3;
+  border-radius: 14px;
+
+  padding: 18px 92px 18px 18px;
+
+  font-size: 14px;
+  line-height: 1.6;
+  color: #111;
+
+  box-sizing: border-box;
+}
+
+.mentoring-read__commentinput--photo::placeholder {
+  color: #b4b4b4;
+}
+
+.mentoring-read__commentbtn--photo {
+  position: absolute;
+  right: 14px;
+  top: 80%;
+  transform: translateY(-50%);
+
+  height: 32px;
+  padding: 0 18px;
+
+  border: none;
+  border-radius: 12px;
+
+  background: #9c9c9c;
+  color: #fff;
+
+  font-weight: 400;
+  cursor: pointer;
+}
+
+.mentoring-read__commentbtn--photo:active {
+  transform: translateY(-50%) scale(0.98);
+}
+
+
+/* ===== 댓글 목록 ===== */
+
+.mentoring-read__comments {
+  margin-top: 16px;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mentoring-read__comment {
+  border: 1px solid #eee;
+  border-radius: 14px;
+
+  padding: 12px 14px;
+
+  background: #fff;
+  font-size: 13px;
+}
+
+.mentoring-read__comment-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+
+  margin-bottom: 8px;
+}
+
+.mentoring-read__comment-meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.mentoring-read__comment-writer {
+  font-size: 13.5px;
+  font-weight: 400;
+  color: #222;
+}
+
+.mentoring-read__comment-date {
+  font-size: 12px;
+  color: #999;
+}
+
+.mentoring-read__comment-body {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #222;
+  white-space: pre-wrap;
+}
+
+
+/* ===== 댓글 케밥 ===== */
+
+.reply-kebab {
+  position: relative;
+  flex: 0 0 auto;
+}
+
+.reply-kebab__btn {
+  border: 0;
+  background: transparent;
+
+  font-size: 18px;
+  line-height: 1;
+
+  cursor: pointer;
+  color: #777;
+
+  padding: 6px 8px;
+  border-radius: 8px;
+}
+
+.reply-kebab__btn:hover {
+  background: #f2f2f2;
+}
+
+.reply-kebab__menu {
+  position: absolute;
+  top: 34px;
+  right: 0;
+
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 12px;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+
+  padding: 8px;
+
+  display: none;
+  min-width: 90px;
+
+  z-index: 20;
+}
+
+.reply-kebab.is-open .reply-kebab__menu {
+  display: block;
+}
+
+.reply-kebab__item {
+  width: 100%;
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  padding: 10px;
+
+  border-radius: 10px;
+
+  font-weight: 400;
+  color: #333;
+
+  text-align: left;
+}
+
+.reply-kebab__item:hover {
+  background: #f4f4f4;
+}
+
+.reply-kebab__item--danger {
+  color: #8b0029;
+}
+
+
+/* ==========================================================
+   반응형
+   ========================================================== */
+
+/* 태블릿 */
+@media (max-width: 1024px) {
+
+  .mentoring-read {
+    padding: 22px 18px 34px;
+  }
+}
+
+
+/* 모바일 */
+@media (max-width: 720px) {
+
+  .mentoring-read {
+    padding: 20px 16px 32px;
+  }
+
+  .mentoring-read__headline {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 7px;
+  }
+
+  /*
+   * 작성자/날짜 + 케밥 영역
+   * 기존 space-between 대신 왼쪽부터 배치
+   */
+  .mentoring-read__headline-right {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 6px;
+  }
+
+  /*
+   * 작성자/날짜 영역을 살짝 왼쪽으로 이동
+   */
+  .mentoring-read__meta {
+    white-space: normal;
+    flex-wrap: wrap;
+    row-gap: 6px;
+    margin-left: -13px;
+  }
+
+  /*
+   * 수정/삭제 케밥 버튼은 오른쪽 끝 유지
+   */
+  .mentoring-read__kebab {
+    margin-left: auto;
+  }
+
+
+  /* 이미지 */
+  .mentoring-read__nav {
+    display: none;
+  }
+
+  .mentoring-read__gallery {
+    display: block;
+    margin: 14px 0 45px;
+  }
+
+  .mentoring-read__gallery-track {
+    height: 220px;
+    gap: 12px;
+
+    overflow-x: auto;
+    overflow-y: hidden;
+
+    -webkit-overflow-scrolling: touch;
+
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+  }
+
+  .mentoring-read__gallery-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .mentoring-read__slide {
+    flex: 0 0 100%;
+    height: 100%;
+
+    scroll-snap-align: start;
+
+    border-radius: 14px;
+  }
+
+
+  /* footer */
+  .mentoring-read__footerbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+
+  /* 댓글 입력 */
+  .mentoring-read__commentbox--photo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    position: static;
+  }
+
+  .mentoring-read__commentbtn--photo {
+    position: static;
+    transform: none;
+
+    width: 100%;
+    height: 32px;
+
+    border-radius: 14px;
+  }
+
+  .mentoring-read__commentinput--photo {
+    padding-right: 18px;
+    min-height: 110px;
+  }
+
+
+  /* 댓글 케밥 */
+  .reply-kebab__menu {
+    top: 30px;
+  }
+
+
+  /* 리액션 영역 잘림 방지 */
+  .mentoring-read__socialbar,
+  .mentoring-read__social,
+  .mentoring-read__footerbar,
+  .mentoring-read__card {
+    overflow: visible !important;
+  }
+
+  .reaction-wrap {
+    position: relative;
+    z-index: 999;
+  }
+
+  .reaction-bar {
+    left: 0 !important;
+    right: auto !important;
+    transform: none !important;
+  }
+
+  .reaction-tail {
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+  }
+}
+
+
+/* 작은 모바일 */
+@media (max-width: 420px) {
+
+  /*
+   * 아주 작은 화면에서는 날짜 영역을
+   * 조금 더 왼쪽으로
+   */
+  .mentoring-read__meta {
+    margin-left: -10px;
+  }
+}
+
+
+/* ==========================================================
+   리액션 바
+   ========================================================== */
+
+.reaction-wrap {
+  position: relative;
+
+  display: inline-flex;
+  align-items: center;
+}
+
+.reaction-bar {
+  position: absolute;
+
+  left: 0;
+  right: auto;
+  bottom: 44px;
+
+  transform: translateY(10px);
+
+  opacity: 0;
+  pointer-events: none;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 8px 10px;
+
+  border-radius: 15px;
+
+  background: #f7f7f7;
+
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+
+  max-width: calc(100vw - 24px);
+
+  overflow: hidden;
+  white-space: nowrap;
+
+  z-index: 100;
+}
+
+.reaction-bar.is-open {
+  opacity: 1;
+  transform: translateY(0);
+
+  pointer-events: auto;
+
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease;
+}
+
+
+/* 리액션 버튼 */
+.reaction-ic {
+  border: 0;
+  background: transparent;
+
+  cursor: pointer;
+
+  width: 42px;
+  height: 42px;
+
+  border-radius: 999px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 2px;
+
+  -webkit-tap-highlight-color: transparent;
+}
+
+.reaction-ic:hover {
+  background: rgba(255, 255, 255, 0.55);
+  transform: translateY(-1px);
+}
+
+.reaction-ic.is-on {
+  background: #8b00290d;
+  outline: 1px solid rgba(139, 0, 41, 0.18);
+}
+
+.reaction-img {
+  width: 24px;
+  height: 24px;
+
+  object-fit: contain;
+  display: block;
+}
+
+.reaction-num {
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 400;
+  color: #333;
+}
+
+
+/* 리액션 꼬리 */
+.reaction-tail {
+  position: absolute;
+
+  left: 50%;
+  bottom: -8px;
+
+  transform: translateX(-50%);
+
+  width: 0;
+  height: 0;
+
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid #f7f7f7;
+}
+
+
+/* 리액션 모바일 */
+@media (max-width: 480px) {
+
+  .reaction-bar {
+    bottom: 40px;
+    padding: 6px 8px;
+    gap: 6px;
+  }
+
+  .reaction-ic {
+    width: 38px;
+    height: 38px;
+  }
+
+  .reaction-img {
+    width: 22px;
+    height: 22px;
+  }
+
+  .reaction-num {
+    font-size: 10px;
+  }
+}
+
+
+/* ===== 하트 ===== */
+
+.meta-icon.heart path {
+  fill: none;
+
+  transition:
+    fill 0.15s ease,
+    transform 0.15s ease;
+}
+
+.meta-icon.heart.is-on path {
+  fill: currentColor;
+}
+
+
+/* ===== 리액션 트리거 빈 상태 ===== */
+
+#reactionTrigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.reaction-empty {
+  position: relative;
+
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  background: #f7f7f7cc;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 1px solid #8b002947;
+}
+
+.reaction-plus {
+  font-size: 26px;
+  line-height: 1;
+
+  color: #b36b72;
+  font-weight: 400;
+}
+
+.reaction-face {
+  position: absolute;
+
+  right: -2px;
+  bottom: -2px;
+
+  width: 20px;
+  height: 20px;
+
+  border-radius: 50%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+}
+
+
+/* 선택된 리액션 */
+.reaction-selected {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.reaction-selected-img {
+  width: 32px;
+  height: 32px;
+
+  object-fit: contain;
+  display: block;
+}

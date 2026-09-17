@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.weeklyMapper">
+
+	<insert id="create" parameterType="com.mis.domain.WeeklyVO">
+		<selectKey keyProperty="weeklyNum" resultType="int" order="BEFORE">
+			SELECT SEQ_WEEKLY.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_WEEKLY (WEEKLY_NUM, WEEK_NAME, START_DATE, END_DATE, USER_ID, ACTIVITY_NAME, REG_DATE, TEAM_NUM ) 
+		VALUES (#{weeklyNum}, #{weekName}, #{startDate}, #{endDate}, #{userId}, #{activityName}, SYSDATE, #{teamNum} )
+	</insert>
+	
+	<select id="read" parameterType="int" resultType="com.mis.domain.WeeklyVO">
+		SELECT WEEKLY_NUM, WEEK_NAME, START_DATE, END_DATE, USER_ID, ACTIVITY_NAME, REG_DATE, TEAM_NUM
+		FROM TBL_WEEKLY 
+		WHERE WEEKLY_NUM = #{value}
+	</select>
+	
+	<update id="update">
+		UPDATE TBL_WEEKLY SET START_DATE = #{startDate}, WEEK_NAME = #{weekName}, END_DATE = #{endDate}, ACTIVITY_NAME = #{activityName}
+		WHERE WEEKLY_NUM = #{weeklyNum}
+	</update>
+	
+	<delete id="delete">
+		DELETE FROM TBL_WEEKLY
+		WHERE WEEKLY_NUM = #{value}
+	</delete>
+	
+	<delete id="deleteTeam">
+		DELETE FROM TBL_WEEKLY
+		WHERE TEAM_NUM = #{value}
+	</delete>
+	
+	<select id="teamWeeklyList" parameterType="int" resultType="com.mis.domain.WeeklyVO">
+   		SELECT WEEKLY_NUM, WEEK_NAME, START_DATE, END_DATE, USER_ID, ACTIVITY_NAME, REG_DATE, TEAM_NUM
+		FROM TBL_WEEKLY
+    	WHERE TEAM_NUM = #{value} 
+    	ORDER BY WEEK_NAME ASC
+	</select>
+	
+
+
+</mapper>

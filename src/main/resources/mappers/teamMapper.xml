@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mis.mapper.TeamMapper">
+
+	<!-- 팀 등록 -->
+	<insert id="create">
+		<selectKey keyProperty="teamNum" resultType="int" order="BEFORE">
+			SELECT SEQ_TEAM.NEXTVAL FROM DUAL
+		</selectKey>
+
+		INSERT INTO TBL_TEAM (TEAM_NUM, TEAM_NAME, YEAR, TERM, USER_ID, REG_DATE)
+		VALUES (#{teamNum}, #{teamName}, #{year}, #{term}, #{userId}, SYSDATE)
+	</insert>
+
+	<!-- 팀 조회 -->
+	<select id="read" resultType="com.mis.domain.TeamVO">
+		SELECT T.TEAM_NUM, T.TEAM_NAME, T.YEAR, T.TERM, T.USER_ID, T.INTRO, T.REG_DATE, U.NAME, U.SCHOOL, U.JUMIN
+		FROM TBL_TEAM T JOIN TBL_USER U ON T.USER_ID = U.USER_ID
+		WHERE T.TEAM_NUM = #{value}
+	</select>
+
+	<!-- 팀 수정 -->
+	<update id="update">
+		UPDATE TBL_TEAM
+
+		<set>
+			<if test="teamName != null and teamName != ''">
+				TEAM_NAME = #{teamName},
+			</if>
+
+			<if test="year != null and year != ''">
+				YEAR = #{year},
+			</if>
+
+			<if test="term != null and term != ''">
+				TERM = #{term},
+			</if>
+
+			<if test="intro != null and intro != ''">
+				INTRO = #{intro},
+			</if>
+
+			<if test="userId != null and userId != ''">
+				USER_ID = #{userId},
+			</if>
+		</set>
+
+		WHERE TEAM_NUM = #{teamNum}
+	</update>
+
+	<!-- 팀 멤버 삭제 -->
+	<delete id="deleteTeamMember">
+		DELETE FROM TBL_TEAM_MEMBER
+		WHERE TEAM_NUM = #{value}
+	</delete>
+
+	<!-- 팀 삭제 -->
+	<delete id="delete">
+		DELETE FROM TBL_TEAM
+		WHERE TEAM_NUM = #{value}
+	</delete>
+
+
+	<!-- 연도/학기 목록 -->
+	<select id="selectYearTermList" resultType="com.mis.dto.YearTermDTO"> 
+		SELECT DISTINCT YEAR, TERM
+		FROM TBL_TEAM
+		ORDER BY TO_NUMBER(YEAR) DESC,  TO_NUMBER(TERM) DESC 
+	</select>
+
+	<!-- 최신 연도/학기 -->
+	<select id="selectLatestYearTerm" resultType="com.mis.dto.YearTermDTO"> 
+		SELECT YEAR, TERM
+		FROM (
+			SELECT DISTINCT YEAR, TERM
+			FROM TBL_TEAM
+			ORDER BY TO_NUMBER(YEAR) DESC, TO_NUMBER(TERM) DESC
+		)
+		WHERE ROWNUM = 1
+
+	</select>
+
+
+	<!-- 검색 조건 -->
+	<sql id="search"> 
+		<if test="keyword != null and keyword != ''">
+			AND (
+				T.TEAM_NAME LIKE '%' || #{keyword} || '%'
+				OR U.NAME LIKE '%' || #{keyword} || '%'
+				OR U.USER_ID LIKE '%' || #{keyword} || '%'
+			)
+		</if> 
+	</sql>
+
+
+	<!-- 팀 목록 -->
+	<select id="listSearch" resultType="com.mis.domain.TeamVO"> 
+		<![CDATA[
+			SELECT *
+			FROM (
+				SELECT
+					ROWNUM AS RNUM,
+					A.*
+				FROM (
+					SELECT T.TEAM_NUM, T.TEAM_NAME, T.YEAR, T.TERM, T.USER_ID, T.INTRO, T.REG_DATE, U.NAME
+					FROM TBL_TEAM T JOIN TBL_USER U ON T.USER_ID = U.USER_ID
+					WHERE 1 = 1
+		]]>
+
+		<if test="year != null and year != ''">
+			AND T.YEAR = #{year}
+		</if>
+
+		<if test="term != null and term != ''">
+			AND T.TERM = #{term}
+		</if>
+
+		<include refid="search" />
+
+		<![CDATA[
+					ORDER BY T.TEAM_NUM DESC
+				) A
+				WHERE ROWNUM <= #{pageEnd}
+			)
+			WHERE RNUM >= #{pageStart}
+			ORDER BY TEAM_NUM DESC
+		]]>
+
+	</select>
+
+
+	<!-- 팀 목록 개수 -->
+	<select id="listSearchCount" resultType="int"> 
+		SELECT COUNT(*)
+		FROM TBL_TEAM T JOIN TBL_USER U ON T.USER_ID = U.USER_ID
+		WHERE 1 = 1
+
+		<if test="year != null and year != ''">
+			AND T.YEAR = #{year}
+		</if>
+
+		<if test="term != null and term != ''">
+			AND T.TERM = #{term}
+		</if>
+
+		<include refid="search" /> 
+	</select>
+
+
+	<!-- 팀 멤버 등록 -->
+	<insert id="insertMember">
+		INSERT INTO TBL_TEAM_MEMBER (TEAM_NUM, USER_ID, PART)
+		VALUES (#{teamNum}, #{userId}, #{part})
+	</insert>
+
+	<!-- 팀 멤버 목록 -->
+	<select id="listMembers" resultType="com.mis.domain.TeamMemberVO"> 
+		SELECT TM.TEAM_NUM, TM.USER_ID, TM.PART, U.JUMIN, U.SCHOOL, U.NAME
+		FROM TBL_TEAM_MEMBER TM JOIN TBL_USER U ON TM.USER_ID = U.USER_ID
+		WHERE TM.TEAM_NUM = #{value}
+		ORDER BY TM.PART, TM.USER_ID
+
+	</select>
+
+</mapper>
