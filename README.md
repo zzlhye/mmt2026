@@ -786,9 +786,6 @@ src/
     │       │   ├── LoginDTO.java                           // 로그인 요청 데이터
     │       │   └── YearTermDTO.java                        // 연도·학기 데이터
     │       │
-    │       ├── Interceptor/                                 # 요청 전·후 공통 처리
-    │       │   └── LoginInterceptor.java                   // 로그인 처리 전후의 세션 관리
-    │       │
     │       └── util/                                        # 파일 처리 관련 공통 기능
     │           ├── MediaUtils.java                         // 파일 미디어 타입 처리
     │           └── UploadFileUtils.java                    // 첨부파일 저장 관련 공통 처리
