@@ -651,44 +651,30 @@ for (WeeklyVO weekly : weeklyList) {
 ```
 
 ```java
-String current = mentoringRelateDao.getType(
-    mentoringNum,
-    userId
-);
+@Override
+@Transactional
+public String toggle(int mentoringNum, String userId, String relateType) throws Exception {
 
-if (current == null) {
+    String currentType = mentoringRelateDao.getType(mentoringNum, userId);
 
-    mentoringRelateDao.create(
-        mentoringNum,
-        userId,
-        relateType
-    );
+    // 기존 반응이 없는 경우
+    if (currentType == null) {
+        mentoringRelateDao.create(mentoringNum, userId, relateType);
+        return relateType;
+    }
+
+    // 같은 반응을 다시 선택한 경우
+    if (currentType.equals(relateType)) {
+        mentoringRelateDao.delete(mentoringNum, userId);
+        return null;
+    }
+
+    // 다른 반응을 선택한 경우
+    mentoringRelateDao.delete(mentoringNum, userId);
+    mentoringRelateDao.create(mentoringNum, userId, relateType);
 
     return relateType;
 }
-
-if (current.equals(relateType)) {
-
-    mentoringRelateDao.delete(
-        mentoringNum,
-        userId
-    );
-
-    return null;
-}
-
-mentoringRelateDao.delete(
-    mentoringNum,
-    userId
-);
-
-mentoringRelateDao.create(
-    mentoringNum,
-    userId,
-    relateType
-);
-
-return relateType;
 ```
 
 반응 변경 과정은 Service 계층에서 처리하고 @Transactional을 적용하여 데이터 일관성을 유지하도록 구성했습니다.
