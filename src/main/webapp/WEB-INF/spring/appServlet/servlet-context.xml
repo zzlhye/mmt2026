@@ -30,18 +30,6 @@
 		base-package="com.mis.controller" />
 
 
-	<beans:bean id="LoginInterceptor"
-		class="com.mis.Interceptor.LoginInterceptor"></beans:bean>
-
-
-	<interceptors>
-		<interceptor>
-			<mapping path="/loginPost" />
-			<beans:ref bean="LoginInterceptor" />
-		</interceptor>
-	</interceptors>
-
-
 	<!--파일 업로드 관련 Beans 설정 -->
 	<beans:bean id="multipartResolver"
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
