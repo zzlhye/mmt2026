@@ -53,7 +53,7 @@
 `Java 1.8`  `Spring Framework(Spring MVC)`  `MyBatis`
 
 ### Frontend
-`JSP`  `JSTL`  `HTML5`  `CSS3`  `JavaScript`  `jQuery` 
+`JSP`  `JavaScript`  `jQuery` 
 
 ### Database
 `Oracle 11g`
